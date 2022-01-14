@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "979685558310",
+    "project_id": "mediclock-f0f07",
+    "storage_bucket": "mediclock-f0f07.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:979685558310:android:cbdd5473bd382ce2b8bee7",
+        "android_client_info": {
+          "package_name": "com.satyajitghosh.mediclock"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "979685558310-m4u2en7vsn5t88lg6u4845453pg9bjoi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-v4_v2qaMmzO-Zdo7JGdjWegwExzntZY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "979685558310-m4u2en7vsn5t88lg6u4845453pg9bjoi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
