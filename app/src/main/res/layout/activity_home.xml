@@ -14,4 +14,13 @@
         android:layout_marginTop="301dp"
         android:layout_marginEnd="124dp"
         android:text="You are already logged in"></TextView>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="293dp"
+        android:text="Button" />
 </RelativeLayout>
