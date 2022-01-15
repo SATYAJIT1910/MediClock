@@ -14,7 +14,7 @@ public class MedicineRecordHandler {
         this.beforeFood = beforeFood;
         this.reminder = reminder;
     }
-    MedicineRecordHandler(){}
+    public MedicineRecordHandler(){}
 
     public String getName() {
         return name;

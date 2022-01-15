@@ -40,6 +40,7 @@ public class HomeActivity extends AppCompatActivity {
     private MaterialButtonToggleGroup materialButtonToggleGroup;
     private long maxID;
     private boolean before_food;
+    private Button show;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +52,7 @@ public class HomeActivity extends AppCompatActivity {
       submitBtn=findViewById(R.id.submitbtn);
       materialButtonToggleGroup=findViewById(R.id.toggleButton);
       radioGroup=findViewById(R.id.radioGroup);
+      show=findViewById(R.id.show);
       maxID=0;
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -89,7 +91,12 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-
+        show.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(HomeActivity.this,DisplayMedicineActivity.class));
+            }
+        });
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -120,6 +127,7 @@ public class HomeActivity extends AppCompatActivity {
                         time
                  );
                 myRef.child("MedicineRecord").child(PersonID).child(Long.toString(maxID+1)).setValue(mrh);
+                Toast.makeText(getApplicationContext(), "Added Successfully", Toast.LENGTH_SHORT).show();
             }
         });
 
