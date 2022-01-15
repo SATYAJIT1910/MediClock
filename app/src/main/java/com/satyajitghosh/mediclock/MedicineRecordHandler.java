@@ -5,13 +5,13 @@ import java.util.ArrayList;
 public class MedicineRecordHandler {
     String name;
     String notes;
-    Boolean beforeAfterFood; //0 for before food and 1 for after food
+    Boolean beforeFood;
     ArrayList<String> reminder;
 
-    public MedicineRecordHandler(String name, String notes, Boolean beforeAfterFood, ArrayList<String> reminder) {
+    public MedicineRecordHandler(String name, String notes, Boolean beforeFood, ArrayList<String> reminder) {
         this.name = name;
         this.notes = notes;
-        this.beforeAfterFood = beforeAfterFood;
+        this.beforeFood = beforeFood;
         this.reminder = reminder;
     }
     MedicineRecordHandler(){}
@@ -32,12 +32,12 @@ public class MedicineRecordHandler {
         this.notes = notes;
     }
 
-    public Boolean getBeforeAfterFood() {
-        return beforeAfterFood;
+    public Boolean getBeforeFood() {
+        return beforeFood;
     }
 
-    public void setBeforeAfterFood(Boolean beforeAfterFood) {
-        this.beforeAfterFood = beforeAfterFood;
+    public void setBeforeFood(Boolean beforeFood) {
+        this.beforeFood = beforeFood;
     }
 
     public ArrayList<String> getReminder() {
