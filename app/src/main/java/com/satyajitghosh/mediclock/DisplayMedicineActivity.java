@@ -36,6 +36,10 @@ public class DisplayMedicineActivity extends AppCompatActivity {
         arrayList=new ArrayList<>();
         TextView account_user_name_view=findViewById(R.id.account_user_name_view);
         account_user_name_view.setText("Hi, "+account.getDisplayName());
+
+        CustomAdapter c=new CustomAdapter(getApplicationContext(),arrayList);
+        listview.setAdapter(c);
+
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -48,12 +52,11 @@ public class DisplayMedicineActivity extends AppCompatActivity {
                    while (items.hasNext()) {
                        DataSnapshot item = items.next();
                        MedicineRecordHandler mrd=item.getValue(MedicineRecordHandler.class);
-                       arrayList.add(mrd);
+                       mrd.key = item.getKey();
+                      // arrayList.add(mrd);
+                       c.UpdateArrayList(mrd);
                  }
-
-                    //  Toast.makeText(getApplicationContext(), "Data fetched", Toast.LENGTH_SHORT).show();
-                    CustomAdapter c=new CustomAdapter(getApplicationContext(),arrayList);
-                    listview.setAdapter(c);
+                   c.requestUpdate();
                 }
             }
 

@@ -3,6 +3,7 @@ package com.satyajitghosh.mediclock;
 import java.util.ArrayList;
 
 public class MedicineRecordHandler {
+    public String key;
     String name;
     String notes;
     Boolean beforeFood;

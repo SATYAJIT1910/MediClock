@@ -12,18 +12,31 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
     public class CustomAdapter extends ArrayAdapter<MedicineRecordHandler> {
         private ArrayList<MedicineRecordHandler> arrayList;
-
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference();
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getContext());
         public CustomAdapter(@NonNull Context context, @NonNull ArrayList<MedicineRecordHandler> arrayList) {
             super(context, 0, arrayList);
             this.arrayList = arrayList;
         }
+        public void UpdateArrayList(MedicineRecordHandler data){
+            arrayList.add(data);
 
+        }
+        public void requestUpdate(){
+            notifyDataSetChanged();
+        }
 
 
         @NonNull
@@ -80,7 +93,11 @@ import java.util.ArrayList;
             currentItemView.findViewById(R.id.delete_btn).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    MedicineRecordHandler mrd=arrayList.get(position);
+                    arrayList.clear();
+                    myRef.child("MedicineRecord").child(account.getId()).child(mrd.key).removeValue();
                     Toast.makeText(getContext(), "Deleted", Toast.LENGTH_SHORT).show();
+                    notifyDataSetChanged();
                 }
             });
             currentItemView.findViewById(R.id.update_btn).setOnClickListener(new View.OnClickListener() {
