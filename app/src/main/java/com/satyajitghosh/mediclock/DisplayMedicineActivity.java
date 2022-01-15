@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class DisplayMedicineActivity extends AppCompatActivity {
     private ListView listview;
@@ -38,15 +39,19 @@ public class DisplayMedicineActivity extends AppCompatActivity {
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    long n = snapshot.child("MedicineRecord").child(account.getId()).getChildrenCount();
+               if (snapshot.exists()) {
+//                    long n = snapshot.child("MedicineRecord").child(account.getId()).getChildrenCount();
 
-                    for (int i = 1; i <= n; i++) {
-                        MedicineRecordHandler mrd = snapshot.child("MedicineRecord").child(account.getId()).child(Long.toString(i)).getValue(MedicineRecordHandler.class);
-                        arrayList.add(mrd);
-                        Log.d("FireData",mrd.getName());
-                    }
-                      //  Toast.makeText(getApplicationContext(), "Data fetched", Toast.LENGTH_SHORT).show();
+
+                   Iterator<DataSnapshot> items = snapshot.child("MedicineRecord").child(account.getId()).getChildren().iterator();
+
+                   while (items.hasNext()) {
+                       DataSnapshot item = items.next();
+                       MedicineRecordHandler mrd=item.getValue(MedicineRecordHandler.class);
+                       arrayList.add(mrd);
+                 }
+
+                    //  Toast.makeText(getApplicationContext(), "Data fetched", Toast.LENGTH_SHORT).show();
                     CustomAdapter c=new CustomAdapter(getApplicationContext(),arrayList);
                     listview.setAdapter(c);
                 }
