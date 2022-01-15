@@ -66,8 +66,8 @@ public class HomeActivity extends AppCompatActivity {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
         Intent intent = getIntent();
-        String nameUser = intent.getStringExtra("UserName");
-        String PersonID=intent.getStringExtra("Id");
+       String nameUser = intent.getStringExtra("UserName");
+       String PersonID=intent.getStringExtra("Id");
 //        logout=findViewById(R.id.button);
 //        logout.setOnClickListener(new View.OnClickListener() {
 //            @Override
