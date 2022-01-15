@@ -55,11 +55,11 @@ import java.util.ArrayList;
                     output_time+="Morning ";
                 }
                 else if(i.contains("1300")){
-                    output_time+="Lunch ";
+                    output_time+="Afternoon ";
 
                 }
                 else if(i.contains("2030")){
-                    output_time+="Dinner";
+                    output_time+="Night";
                 }
                 else{
                     output_time+="error";

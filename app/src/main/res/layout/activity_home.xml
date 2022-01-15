@@ -84,7 +84,7 @@
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Lunch" />
+            android:text="afternoon" />
 
         <Button
             android:id="@+id/night"
