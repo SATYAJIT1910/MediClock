@@ -2,11 +2,9 @@ package com.satyajitghosh.mediclock;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +31,8 @@ public class DisplayMedicineActivity extends AppCompatActivity {
         listview=findViewById(R.id.listview);
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         arrayList=new ArrayList<>();
+        TextView account_user_name_view=findViewById(R.id.account_user_name_view);
+        account_user_name_view.setText("Hi, "+account.getDisplayName());
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
