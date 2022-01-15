@@ -38,6 +38,10 @@ import java.util.ArrayList;
             notifyDataSetChanged();
         }
 
+        public boolean empty(){
+            return arrayList.isEmpty();
+        }
+
 
         @NonNull
         @Override

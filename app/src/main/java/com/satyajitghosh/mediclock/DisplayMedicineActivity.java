@@ -44,6 +44,8 @@ public class DisplayMedicineActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                if (snapshot.exists()) {
+                   findViewById(R.id.empty).setVisibility(View.INVISIBLE);
+                   findViewById(R.id.emptyText).setVisibility(View.INVISIBLE);
 //                    long n = snapshot.child("MedicineRecord").child(account.getId()).getChildrenCount();
 
 
@@ -57,7 +59,10 @@ public class DisplayMedicineActivity extends AppCompatActivity {
                        c.UpdateArrayList(mrd);
                  }
                    c.requestUpdate();
-                }
+                }else{
+                   findViewById(R.id.empty).setVisibility(View.VISIBLE);
+                   findViewById(R.id.emptyText).setVisibility(View.VISIBLE);
+               }
             }
 
             @Override
