@@ -47,4 +47,14 @@ public class MedicineRecordHandler {
     public void setReminder(ArrayList<String> reminder) {
         this.reminder = reminder;
     }
+
+    @Override
+    public String toString() {
+        return "MedicineRecordHandler{" +
+                "name='" + name + '\'' +
+                ", notes='" + notes + '\'' +
+                ", beforeFood=" + beforeFood +
+                ", reminder=" + reminder +
+                '}';
+    }
 }

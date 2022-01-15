@@ -44,7 +44,7 @@ public class DisplayMedicineActivity extends AppCompatActivity {
                         arrayList.add(mrd);
                         Log.d("FireData",mrd.getName());
                     }
-                        Toast.makeText(getApplicationContext(), "Data fetched", Toast.LENGTH_SHORT).show();
+                      //  Toast.makeText(getApplicationContext(), "Data fetched", Toast.LENGTH_SHORT).show();
                     CustomAdapter c=new CustomAdapter(getApplicationContext(),arrayList);
                     listview.setAdapter(c);
                 }
