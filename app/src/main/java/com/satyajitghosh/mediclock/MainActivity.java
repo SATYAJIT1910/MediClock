@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         if(account!=null){
             String personName = account.getDisplayName();
-            startActivity(new Intent(MainActivity.this,HomeActivity.class).putExtra("UserName",personName));
+            startActivity(new Intent(MainActivity.this,HomeActivity.class).putExtra("UserName",personName).putExtra("Id",account.getId()));
         }
         setContentView(R.layout.activity_main);
         // Set the dimensions of the sign-in button.
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
             String personName = account.getDisplayName();
 
             // Signed in successfully, show authenticated UI.
-            startActivity(new Intent(MainActivity.this,HomeActivity.class).putExtra("UserName",personName));
+            startActivity(new Intent(MainActivity.this,HomeActivity.class).putExtra("UserName",personName).putExtra("Id",account.getId()));
 
 
         } catch (ApiException e) {
