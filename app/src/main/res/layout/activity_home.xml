@@ -8,7 +8,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/name"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="240sp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="195dp"
         android:hint="medicine name"
@@ -25,7 +25,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/note"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="240sp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="39dp"
         android:hint="note (optional)"
@@ -35,7 +35,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
