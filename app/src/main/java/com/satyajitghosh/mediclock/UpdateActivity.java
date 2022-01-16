@@ -61,7 +61,7 @@ public class UpdateActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(
-                        new Intent(UpdateActivity.this,HomeActivity.class)
+                        new Intent(UpdateActivity.this,DisplayMedicineActivity.class)
                         .putExtra("UserName",account.getDisplayName()).putExtra("Id",account.getId())
                 );
             }
