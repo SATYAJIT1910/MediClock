@@ -105,13 +105,13 @@ public class HomeActivity extends AppCompatActivity {
                ArrayList<String> time=new ArrayList<>();
                for (Integer i:arr){
                    if(i==R.id.morning){
-                       time.add("0800");
+                       time.add(TIME.MORNING);
                    }
                    else if(i==R.id.lunch){
-                       time.add("1300");
+                       time.add(TIME.AFTERNOON);
                    }
                    else if(i==R.id.night){
-                       time.add("2030");
+                       time.add(TIME.NIGHT);
                    }
                 }
 

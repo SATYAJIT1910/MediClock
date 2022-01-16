@@ -86,13 +86,13 @@ public class UpdateActivity extends AppCompatActivity {
             radioGroup.check(R.id.up_radio_button_2);
         }
         for(String i:time){
-            if(i.contains("0800")){
+            if(i.contains(TIME.MORNING)){
                 materialButtonToggleGroup.check(R.id.up_morning);
             }
-            else if(i.contains("1300")){
+            else if(i.contains(TIME.AFTERNOON)){
                 materialButtonToggleGroup.check(R.id.up_lunch);
             }
-            else if(i.contains("2030")){
+            else if(i.contains(TIME.NIGHT)){
                 materialButtonToggleGroup.check(R.id.up_night);
             }
         }
@@ -117,13 +117,13 @@ public class UpdateActivity extends AppCompatActivity {
         ArrayList<String> time=new ArrayList<>();
         for (Integer i:arr){
             if(i==R.id.up_morning){
-                time.add("0800");
+                time.add(TIME.MORNING);
             }
             else if(i==R.id.up_lunch){
-                time.add("1300");
+                time.add(TIME.AFTERNOON);
             }
             else if(i==R.id.up_night){
-                time.add("2030");
+                time.add(TIME.NIGHT);
             }
         }
 

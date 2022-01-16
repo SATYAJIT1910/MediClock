@@ -69,14 +69,14 @@ import java.util.ArrayList;
             TextView time_view=currentItemView.findViewById(R.id.time_view);
             String output_time="";
             for(String i:arrayList.get(position).getReminder()){
-                if(i.contains("0800")){
+                if(i.contains(TIME.MORNING)){
                     output_time+="Morning ";
                 }
-                else if(i.contains("1300")){
+                else if(i.contains(TIME.AFTERNOON)){
                     output_time+="Afternoon ";
 
                 }
-                else if(i.contains("2030")){
+                else if(i.contains(TIME.NIGHT)){
                     output_time+="Night";
                 }
                 else{
