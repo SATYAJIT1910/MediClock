@@ -1,6 +1,7 @@
 package com.satyajitghosh.mediclock;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -107,7 +108,15 @@ import java.util.ArrayList;
             currentItemView.findViewById(R.id.update_btn).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(getContext(), "Updated", Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(getContext(), UpdateActivity.class);
+                    MedicineRecordHandler mrd=arrayList.get(position);
+                    i.putExtra("name",mrd.getName());
+                    i.putExtra("note",mrd.getNotes());
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); //add this line
+//                    i.putExtra("beforeFood",mrd.getBeforeFood());
+//                    i.putExtra("time",mrd.getReminder());
+//                    i.putExtra
+                    getContext().startActivity(i);
                 }
             });
 
