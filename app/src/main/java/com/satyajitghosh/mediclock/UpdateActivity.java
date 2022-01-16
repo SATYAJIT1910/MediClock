@@ -30,6 +30,12 @@ public class UpdateActivity extends AppCompatActivity {
         radioGroup=findViewById(R.id.up_radioGroup);
         materialButtonToggleGroup=findViewById(R.id.up_toggleButton);
         Intent intent=getIntent();
+        prefillData(intent);
+
+
+    }
+    public void prefillData(Intent intent){
+
         String nameValue=intent.getStringExtra("name");
         String noteValue=intent.getStringExtra("note");
         Boolean beforeFood=intent.getBooleanExtra("beforeFood",true);
@@ -57,5 +63,7 @@ public class UpdateActivity extends AppCompatActivity {
         note.getEditText().setText(noteValue);
 
 
+
     }
+
 }
