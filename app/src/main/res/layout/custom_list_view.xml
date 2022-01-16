@@ -55,7 +55,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="65dp"
-        android:visibility="invisible"
+        android:visibility="visible"
         android:background="@drawable/ic_baseline_edit_24"
         tools:layout_editor_absoluteX="312dp"
         tools:layout_editor_absoluteY="56dp" />
