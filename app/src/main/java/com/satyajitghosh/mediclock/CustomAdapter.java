@@ -108,13 +108,16 @@ import java.util.ArrayList;
             currentItemView.findViewById(R.id.update_btn).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
                     Intent i = new Intent(getContext(), UpdateActivity.class);
                     MedicineRecordHandler mrd=arrayList.get(position);
+                    arrayList.clear();
                     i.putExtra("name",mrd.getName());
                     i.putExtra("note",mrd.getNotes());
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); //add this line
                     i.putExtra("beforeFood",mrd.getBeforeFood());
                     i.putExtra("time",mrd.getReminder());
+                    i.putExtra("key",mrd.key);
                     getContext().startActivity(i);
                 }
             });
