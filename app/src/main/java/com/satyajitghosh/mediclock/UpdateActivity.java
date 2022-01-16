@@ -54,7 +54,10 @@ public class UpdateActivity extends AppCompatActivity {
             public void onClick(View view) {
 
             myRef.child("MedicineRecord").child(PersonID).child(key).setValue(getData());
-
+                startActivity(
+                        new Intent(UpdateActivity.this,DisplayMedicineActivity.class)
+                                .putExtra("UserName",account.getDisplayName()).putExtra("Id",account.getId())
+                );
             }
         });
         cancelBtn.setOnClickListener(new View.OnClickListener() {
