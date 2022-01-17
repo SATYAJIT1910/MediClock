@@ -8,24 +8,26 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.json.JSONArray;
+
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class AlarmManagerHandler extends AppCompatActivity {
 
+    private static final String sTagAlarms = ":alarms";
     public static final String CHANNEL_ID = "10";
 
-    public AlarmManagerHandler(){}
-    public AlarmManagerHandler(Context context, int hour, int minute,String medicineName){
-        createNotificationChannel();
-        startAlert(context,hour,minute,medicineName);
-    }
 
-    public void startAlert(Context context, int hour, int minute,String medicineName){
+    public static void addAlert(Context context, int hour, int minute,String medicineName,int notificationId){
 
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.HOUR_OF_DAY,hour);
@@ -37,13 +39,12 @@ public class AlarmManagerHandler extends AppCompatActivity {
         Intent intent = new Intent(context, MyBroadcastReceiver.class)
                 .putExtra("MedicineName",medicineName);
 
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                context.getApplicationContext(), 9999, intent, 0);
-        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, notificationId, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time ,AlarmManager.INTERVAL_DAY,pendingIntent);
         Toast.makeText(context, "Alarm added",Toast.LENGTH_LONG).show();
     }
-    private void createNotificationChannel() {
+    private static void createNotificationChannel(Context context) {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -54,9 +55,62 @@ public class AlarmManagerHandler extends AppCompatActivity {
             channel.setDescription(description);
             // Register the channel with the system; you can't change the importance
             // or other notification behaviors after this
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
+    }
+    public static void cancelAllAlarms(Context context, Intent intent) {
+        for (int idAlarm : getAlarmIds(context)) {
+            cancelAlarm(context, intent, idAlarm);
+        }
+    }
+    public static void cancelAlarm(Context context, Intent intent, int notificationId) {
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, notificationId, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        alarmManager.cancel(pendingIntent);
+        pendingIntent.cancel();
+
+        removeAlarmId(context, notificationId);
+    }
+
+    private static void removeAlarmId(Context context, int id) {
+        List<Integer> idsAlarms = getAlarmIds(context);
+
+        for (int i = 0; i < idsAlarms.size(); i++) {
+            if (idsAlarms.get(i) == id)
+                idsAlarms.remove(i);
+        }
+
+        saveIdsInPreferences(context, idsAlarms);
+    }
+
+    private static List<Integer> getAlarmIds(Context context) {
+        List<Integer> ids = new ArrayList<>();
+        try {
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+            JSONArray jsonArray2 = new JSONArray(prefs.getString(context.getPackageName() + sTagAlarms, "[]"));
+
+            for (int i = 0; i < jsonArray2.length(); i++) {
+                ids.add(jsonArray2.getInt(i));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return ids;
+    }
+    private static void saveIdsInPreferences(Context context, List<Integer> lstIds) {
+        JSONArray jsonArray = new JSONArray();
+        for (Integer idAlarm : lstIds) {
+            jsonArray.put(idAlarm);
+        }
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(context.getPackageName() + sTagAlarms, jsonArray.toString());
+
+        editor.apply();
     }
 
 
