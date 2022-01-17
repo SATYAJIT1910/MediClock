@@ -8,17 +8,27 @@ public class MedicineRecordHandler {
     String notes;
     Boolean beforeFood;
     ArrayList<String> reminder;
+    int notificationID;
 
-    public MedicineRecordHandler(String name, String notes, Boolean beforeFood, ArrayList<String> reminder) {
+    public MedicineRecordHandler(String name, String notes, Boolean beforeFood, ArrayList<String> reminder,int notificationID) {
         this.name = name;
         this.notes = notes;
         this.beforeFood = beforeFood;
         this.reminder = reminder;
+        this.notificationID=notificationID;
     }
     public MedicineRecordHandler(){}
 
     public String getName() {
         return name;
+    }
+
+    public int getNotificationID() {
+        return notificationID;
+    }
+
+    public void setNotificationID(int notificationID) {
+        this.notificationID = notificationID;
     }
 
     public void setName(String name) {

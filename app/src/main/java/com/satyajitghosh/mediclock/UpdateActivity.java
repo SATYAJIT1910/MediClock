@@ -29,6 +29,7 @@ public class UpdateActivity extends AppCompatActivity {
     private boolean before_food;
     private GoogleSignInClient mGoogleSignInClient;
     private Button cancelBtn;
+    private static int notificationID=(int)Math.random()*100;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,7 +132,8 @@ public class UpdateActivity extends AppCompatActivity {
                 nameValue,
                 noteValue,
                 beforeFoodValue,
-                time
+                time,
+                notificationID++
         );
 
      return mrh;

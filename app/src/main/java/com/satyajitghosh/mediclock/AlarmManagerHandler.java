@@ -25,7 +25,6 @@ public class AlarmManagerHandler extends AppCompatActivity {
 
     private static final String sTagAlarms = ":alarms";
     public static final String CHANNEL_ID = "10";
-    public static int notiID=1;
 
 
     public static void addAlert(Context context, int hour, int minute,String medicineName,int notificationId,String Food){
@@ -42,11 +41,11 @@ public class AlarmManagerHandler extends AppCompatActivity {
                 .putExtra("Food",Food);
 
 
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, notificationId, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, notificationId, intent,0);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
       //  alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time ,AlarmManager.INTERVAL_DAY,pendingIntent);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time ,70000,pendingIntent); //For testing
-      //  Toast.makeText(context, "Alarm added",Toast.LENGTH_LONG).show();
+        Toast.makeText(context, "Alarm added",Toast.LENGTH_LONG).show();
     }
     public static void createNotificationChannel(Context context) {
         // Create the NotificationChannel, but only on API 26+ because
@@ -63,18 +62,17 @@ public class AlarmManagerHandler extends AppCompatActivity {
             notificationManager.createNotificationChannel(channel);
         }
     }
-    public static void cancelAllAlarms(Context context, Intent intent) {
+    public static void cancelAllAlarms(Context context,Intent intent) {
         for (int idAlarm : getAlarmIds(context)) {
             cancelAlarm(context, intent, idAlarm);
         }
     }
     public static void cancelAlarm(Context context, Intent intent, int notificationId) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, notificationId, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, notificationId, intent,0);
         alarmManager.cancel(pendingIntent);
         pendingIntent.cancel();
-
-        removeAlarmId(context, notificationId);
+       // removeAlarmId(context, notificationId);
     }
 
     private static void removeAlarmId(Context context, int id) {
@@ -117,7 +115,10 @@ public class AlarmManagerHandler extends AppCompatActivity {
         editor.apply();
     }
     public static void initAlarm(MedicineRecordHandler mrh, Context context) {
+
         String medicineName = mrh.getName();
+        int notificationID=mrh.getNotificationID();
+
         for (String i : mrh.getReminder()) {
             int hour = Integer.parseInt(i.substring(0, 2));
             int minutes = Integer.parseInt(i.substring(2, 4));
@@ -130,7 +131,7 @@ public class AlarmManagerHandler extends AppCompatActivity {
             }
 
            // AlarmManagerHandler.addAlert(context, hour, minutes, medicineName, (int) Math.random() * 1000);
-            AlarmManagerHandler.addAlert(context, 19, 12, medicineName, notiID++,Food); //for testing
+            AlarmManagerHandler.addAlert(context, 19, 12, medicineName,notificationID,Food); //for testing
         }
     }
 

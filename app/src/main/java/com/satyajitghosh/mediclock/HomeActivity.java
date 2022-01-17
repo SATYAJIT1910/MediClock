@@ -38,6 +38,7 @@ public class HomeActivity extends AppCompatActivity {
     private long maxID;
     private boolean before_food;
     private Button show;
+    private static int notificationID=(int)Math.random()*10000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,9 +123,11 @@ public class HomeActivity extends AppCompatActivity {
                         name.getEditText().getText().toString(),
                         note.getEditText().getText().toString(),
                         before_food,
-                        time
+                        time,
+                        notificationID++
                  );
                 myRef.child("MedicineRecord").child(PersonID).child(Long.toString(maxID+1)).setValue(mrh);
+                AlarmManagerHandler.initAlarm(mrh,getApplicationContext());
                 Toast.makeText(getApplicationContext(), "Added Successfully", Toast.LENGTH_SHORT).show();
             }
         });

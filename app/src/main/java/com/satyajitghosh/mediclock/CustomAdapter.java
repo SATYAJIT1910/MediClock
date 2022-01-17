@@ -102,6 +102,9 @@ import java.util.ArrayList;
                     arrayList.clear();
                     myRef.child("MedicineRecord").child(account.getId()).child(mrd.key).removeValue();
                     Toast.makeText(getContext(), "Deleted", Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent(getContext(), MyBroadcastReceiver.class);
+                    AlarmManagerHandler.cancelAlarm(getContext(),intent,mrd.getNotificationID());
                     notifyDataSetChanged();
                 }
             });

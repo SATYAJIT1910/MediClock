@@ -1,6 +1,7 @@
 package com.satyajitghosh.mediclock;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,6 +29,7 @@ public class DisplayMedicineActivity extends AppCompatActivity {
     private ListView listview;
     private DatabaseReference mDatabase;
     private ArrayList<MedicineRecordHandler> arrayList;
+    protected GoogleSignInAccount account;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +37,7 @@ public class DisplayMedicineActivity extends AppCompatActivity {
         setContentView(R.layout.activity_display_medicine);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         listview = findViewById(R.id.listview);
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        account = GoogleSignIn.getLastSignedInAccount(this);
         arrayList = new ArrayList<>();
         TextView account_user_name_view = findViewById(R.id.account_user_name_view);
         account_user_name_view.setText("Hi, " + account.getDisplayName());
@@ -59,8 +62,6 @@ public class DisplayMedicineActivity extends AppCompatActivity {
                         mrd.key = item.getKey();
                         // arrayList.add(mrd);
                         c.UpdateArrayList(mrd);
-                        //  AlarmManagerHandler.cancelAllAlarms(getApplicationContext(),);
-                       AlarmManagerHandler.initAlarm(mrd, getApplicationContext());
                     }
                     c.requestUpdate();
                 } else {
@@ -82,8 +83,6 @@ public class DisplayMedicineActivity extends AppCompatActivity {
                 startActivity(new Intent(DisplayMedicineActivity.this, HomeActivity.class).putExtra("UserName", account.getDisplayName()).putExtra("Id", account.getId()));
             }
         });
-
     }
 
-
-}
+    }
