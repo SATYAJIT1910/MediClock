@@ -60,7 +60,7 @@ public class DisplayMedicineActivity extends AppCompatActivity {
                         // arrayList.add(mrd);
                         c.UpdateArrayList(mrd);
                         //  AlarmManagerHandler.cancelAllAlarms(getApplicationContext(),);
-                        AlarmManagerHandler.initAlarm(mrd, getApplicationContext());
+                       AlarmManagerHandler.initAlarm(mrd, getApplicationContext());
                     }
                     c.requestUpdate();
                 } else {

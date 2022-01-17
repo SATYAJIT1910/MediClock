@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -16,7 +17,7 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
             String MedicineName=intent.getStringExtra("MedicineName");
             String Food=intent.getStringExtra("Food");
             showNotification(context,MedicineName,Food);
-
+      //  Toast.makeText(context, MedicineName, Toast.LENGTH_SHORT).show(); //for testing
     }
     public void showNotification(Context context,String MedicineName,String Food){
 

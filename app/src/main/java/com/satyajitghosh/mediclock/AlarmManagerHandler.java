@@ -25,6 +25,7 @@ public class AlarmManagerHandler extends AppCompatActivity {
 
     private static final String sTagAlarms = ":alarms";
     public static final String CHANNEL_ID = "10";
+    public static int notiID=1;
 
 
     public static void addAlert(Context context, int hour, int minute,String medicineName,int notificationId,String Food){
@@ -44,8 +45,8 @@ public class AlarmManagerHandler extends AppCompatActivity {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, notificationId, intent, PendingIntent.FLAG_CANCEL_CURRENT);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
       //  alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time ,AlarmManager.INTERVAL_DAY,pendingIntent);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time ,60000,pendingIntent); //For testing
-        Toast.makeText(context, "Alarm added",Toast.LENGTH_LONG).show();
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time ,70000,pendingIntent); //For testing
+      //  Toast.makeText(context, "Alarm added",Toast.LENGTH_LONG).show();
     }
     public static void createNotificationChannel(Context context) {
         // Create the NotificationChannel, but only on API 26+ because
@@ -128,9 +129,8 @@ public class AlarmManagerHandler extends AppCompatActivity {
                 Food="after food";
             }
 
-
            // AlarmManagerHandler.addAlert(context, hour, minutes, medicineName, (int) Math.random() * 1000);
-            AlarmManagerHandler.addAlert(context, 19, 12, medicineName, (int) Math.random() * 1000,Food); //for testing
+            AlarmManagerHandler.addAlert(context, 19, 12, medicineName, notiID++,Food); //for testing
         }
     }
 
