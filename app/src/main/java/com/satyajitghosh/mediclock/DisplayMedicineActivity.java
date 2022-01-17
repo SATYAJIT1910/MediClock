@@ -3,6 +3,7 @@ package com.satyajitghosh.mediclock;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,43 +27,48 @@ public class DisplayMedicineActivity extends AppCompatActivity {
     private ListView listview;
     private DatabaseReference mDatabase;
     private ArrayList<MedicineRecordHandler> arrayList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_medicine);
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        listview=findViewById(R.id.listview);
+        listview = findViewById(R.id.listview);
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        arrayList=new ArrayList<>();
-        TextView account_user_name_view=findViewById(R.id.account_user_name_view);
-        account_user_name_view.setText("Hi, "+account.getDisplayName());
+        arrayList = new ArrayList<>();
+        TextView account_user_name_view = findViewById(R.id.account_user_name_view);
+        account_user_name_view.setText("Hi, " + account.getDisplayName());
 
-        CustomAdapter c=new CustomAdapter(getApplicationContext(),arrayList);
+        CustomAdapter c = new CustomAdapter(getApplicationContext(), arrayList);
         listview.setAdapter(c);
 
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-               if (snapshot.exists()) {
-                   findViewById(R.id.empty).setVisibility(View.INVISIBLE);
-                   findViewById(R.id.emptyText).setVisibility(View.INVISIBLE);
+                if (snapshot.exists()) {
+                    findViewById(R.id.empty).setVisibility(View.INVISIBLE);
+                    findViewById(R.id.emptyText).setVisibility(View.INVISIBLE);
 //                    long n = snapshot.child("MedicineRecord").child(account.getId()).getChildrenCount();
 
 
-                   Iterator<DataSnapshot> items = snapshot.child("MedicineRecord").child(account.getId()).getChildren().iterator();
+                    Iterator<DataSnapshot> items = snapshot.child("MedicineRecord").child(account.getId()).getChildren().iterator();
 
-                   while (items.hasNext()) {
-                       DataSnapshot item = items.next();
-                       MedicineRecordHandler mrd=item.getValue(MedicineRecordHandler.class);
-                       mrd.key = item.getKey();
-                      // arrayList.add(mrd);
-                       c.UpdateArrayList(mrd);
-                 }
-                   c.requestUpdate();
-                }else{
-                   findViewById(R.id.empty).setVisibility(View.VISIBLE);
-                   findViewById(R.id.emptyText).setVisibility(View.VISIBLE);
-               }
+                    while (items.hasNext()) {
+                        DataSnapshot item = items.next();
+                        MedicineRecordHandler mrd = item.getValue(MedicineRecordHandler.class);
+                        mrd.key = item.getKey();
+                        // arrayList.add(mrd);
+                        c.UpdateArrayList(mrd);
+                        //  AlarmManagerHandler.cancelAllAlarms(getApplicationContext(),);
+                        AlarmManagerHandler.initAlarm(mrd, getApplicationContext());
+                    }
+                    c.requestUpdate();
+                } else {
+                    findViewById(R.id.empty).setVisibility(View.VISIBLE);
+                    findViewById(R.id.emptyText).setVisibility(View.VISIBLE);
+                }
+
+
             }
 
             @Override
@@ -73,9 +79,11 @@ public class DisplayMedicineActivity extends AppCompatActivity {
         findViewById(R.id.add_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(DisplayMedicineActivity.this,HomeActivity.class).putExtra("UserName",account.getDisplayName()).putExtra("Id",account.getId()));
+                startActivity(new Intent(DisplayMedicineActivity.this, HomeActivity.class).putExtra("UserName", account.getDisplayName()).putExtra("Id", account.getId()));
             }
         });
 
     }
+
+
 }

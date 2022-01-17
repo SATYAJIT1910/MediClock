@@ -27,7 +27,7 @@ public class AlarmManagerHandler extends AppCompatActivity {
     public static final String CHANNEL_ID = "10";
 
 
-    public static void addAlert(Context context, int hour, int minute,String medicineName,int notificationId){
+    public static void addAlert(Context context, int hour, int minute,String medicineName,int notificationId,String Food){
 
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.HOUR_OF_DAY,hour);
@@ -37,14 +37,17 @@ public class AlarmManagerHandler extends AppCompatActivity {
 
 
         Intent intent = new Intent(context, MyBroadcastReceiver.class)
-                .putExtra("MedicineName",medicineName);
+                .putExtra("MedicineName",medicineName)
+                .putExtra("Food",Food);
+
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, notificationId, intent, PendingIntent.FLAG_CANCEL_CURRENT);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time ,AlarmManager.INTERVAL_DAY,pendingIntent);
+      //  alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time ,AlarmManager.INTERVAL_DAY,pendingIntent);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time ,60000,pendingIntent); //For testing
         Toast.makeText(context, "Alarm added",Toast.LENGTH_LONG).show();
     }
-    private static void createNotificationChannel(Context context) {
+    public static void createNotificationChannel(Context context) {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -111,6 +114,24 @@ public class AlarmManagerHandler extends AppCompatActivity {
         editor.putString(context.getPackageName() + sTagAlarms, jsonArray.toString());
 
         editor.apply();
+    }
+    public static void initAlarm(MedicineRecordHandler mrh, Context context) {
+        String medicineName = mrh.getName();
+        for (String i : mrh.getReminder()) {
+            int hour = Integer.parseInt(i.substring(0, 2));
+            int minutes = Integer.parseInt(i.substring(2, 4));
+            String Food;
+
+            if(mrh.getBeforeFood()){
+                Food="before food";
+            }else{
+                Food="after food";
+            }
+
+
+           // AlarmManagerHandler.addAlert(context, hour, minutes, medicineName, (int) Math.random() * 1000);
+            AlarmManagerHandler.addAlert(context, 19, 12, medicineName, (int) Math.random() * 1000,Food); //for testing
+        }
     }
 
 

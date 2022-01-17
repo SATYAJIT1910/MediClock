@@ -3,6 +3,7 @@ package com.satyajitghosh.mediclock;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -23,6 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.lang.Math;
 
 public class HomeActivity extends AppCompatActivity {
     private Button logout;
@@ -106,6 +108,7 @@ public class HomeActivity extends AppCompatActivity {
                for (Integer i:arr){
                    if(i==R.id.morning){
                        time.add(TIME.MORNING);
+
                    }
                    else if(i==R.id.lunch){
                        time.add(TIME.AFTERNOON);
@@ -126,10 +129,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-
-
-
     }
 
 
-}
+    }

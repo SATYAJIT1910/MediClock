@@ -3,6 +3,7 @@ package com.satyajitghosh.mediclock;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -13,15 +14,16 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
             String MedicineName=intent.getStringExtra("MedicineName");
-            showNotification(context,MedicineName);
+            String Food=intent.getStringExtra("Food");
+            showNotification(context,MedicineName,Food);
 
     }
-    public void showNotification(Context context,String MedicineName){
+    public void showNotification(Context context,String MedicineName,String Food){
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, AlarmManagerHandler.CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setSmallIcon(R.drawable.logo)
                 .setContentTitle("MediClock Reminder")
-                .setContentText("Hey , Take your Medicine"+MedicineName)
+                .setContentText("Hey, Take your medicine "+MedicineName+" "+Food+".")
                 .setStyle(new NotificationCompat.BigTextStyle())
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
