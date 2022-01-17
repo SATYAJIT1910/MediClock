@@ -17,7 +17,13 @@ import java.util.Calendar;
 
 public class AlarmManagerHandler extends AppCompatActivity {
 
-    private static final String CHANNEL_ID = "10";
+    public static final String CHANNEL_ID = "10";
+
+    public AlarmManagerHandler(){}
+    public AlarmManagerHandler(Context context, int hour, int minute,String medicineName){
+        createNotificationChannel();
+        startAlert(context,hour,minute,medicineName);
+    }
 
     public void startAlert(Context context, int hour, int minute,String medicineName){
 
