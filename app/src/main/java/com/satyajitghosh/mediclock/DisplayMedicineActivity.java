@@ -58,10 +58,13 @@ public class DisplayMedicineActivity extends AppCompatActivity {
 
                     while (items.hasNext()) {
                         DataSnapshot item = items.next();
-                        MedicineRecordHandler mrd = item.getValue(MedicineRecordHandler.class);
+
+                       MedicineRecordHandler mrd = item.getValue(MedicineRecordHandler.class);
+                        Log.d("DisplayProblem",mrd.toString());
+
                         mrd.key = item.getKey();
                         // arrayList.add(mrd);
-                        c.UpdateArrayList(mrd);
+                      c.UpdateArrayList(mrd);
                     }
                     c.requestUpdate();
                 } else {

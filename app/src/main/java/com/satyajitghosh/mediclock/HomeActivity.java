@@ -41,7 +41,6 @@ public class HomeActivity extends AppCompatActivity {
     private long maxID;
     private boolean before_food;
     private Button show;
-    private static int notificationID=(int)new Random().nextInt(99999 - 00001) + 00001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,17 +107,16 @@ public class HomeActivity extends AppCompatActivity {
                    before_food=false;
                }
                List<Integer> arr= materialButtonToggleGroup.getCheckedButtonIds();
-               ArrayList<String> time=new ArrayList<>();
+               ArrayList<TIME.AlarmBundle> time=new ArrayList<>();
                for (Integer i:arr){
                    if(i==R.id.morning){
-                       time.add(TIME.MORNING);
-
+                       time.add(new TIME.AlarmBundle(TIME.MORNING,AlarmManagerHandler.setUniqueNotificationId()));
                    }
                    else if(i==R.id.lunch){
-                       time.add(TIME.AFTERNOON);
+                       time.add(new TIME.AlarmBundle(TIME.AFTERNOON,AlarmManagerHandler.setUniqueNotificationId()));
                    }
                    else if(i==R.id.night){
-                       time.add(TIME.NIGHT);
+                       time.add(new TIME.AlarmBundle(TIME.NIGHT,AlarmManagerHandler.setUniqueNotificationId()));
                    }
                 }
 
@@ -130,8 +128,7 @@ public class HomeActivity extends AppCompatActivity {
                         name.getEditText().getText().toString(),
                         note.getEditText().getText().toString(),
                         before_food,
-                        time,
-                        notificationID++
+                        time
                  );
                 myRef.child("MedicineRecord").child(PersonID).child(Long.toString(maxID+1)).setValue(mrh);
                 AlarmManagerHandler.initAlarm(mrh,getApplicationContext());

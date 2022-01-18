@@ -68,19 +68,20 @@ import java.util.ArrayList;
             }
             TextView time_view=currentItemView.findViewById(R.id.time_view);
             String output_time="";
-            for(String i:arrayList.get(position).getReminder()){
-                if(i.contains(TIME.MORNING)){
+            for(TIME.AlarmBundle i:arrayList.get(position).getReminder()){
+                String j=i.getTime();
+                if(j.contains(TIME.MORNING)){
                     output_time+="Morning ";
                 }
-                else if(i.contains(TIME.AFTERNOON)){
+                else if(j.contains(TIME.AFTERNOON)){
                     output_time+="Afternoon ";
 
                 }
-                else if(i.contains(TIME.NIGHT)){
+                else if(j.contains(TIME.NIGHT)){
                     output_time+="Night";
                 }
                 else{
-                    output_time+="error";
+                    output_time+="ERROR";
                 }
             }
             time_view.setText(output_time);
@@ -104,7 +105,7 @@ import java.util.ArrayList;
                     Toast.makeText(getContext(), "Deleted", Toast.LENGTH_SHORT).show();
 
                     Intent intent = new Intent(getContext(), MyBroadcastReceiver.class);
-                    AlarmManagerHandler.cancelAlarm(getContext(),intent,mrd.getNotificationID());
+                    AlarmManagerHandler.cancelAlarm(getContext(),intent,mrd);
                     notifyDataSetChanged();
                 }
             });
