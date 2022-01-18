@@ -2,6 +2,8 @@ package com.satyajitghosh.mediclock;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -55,6 +57,12 @@ public class UpdateActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+            if(InputValidationHandler.inputValidation(UpdateActivity.this,getData().getName(),getData().getReminder())){
+
+
+
+
+
             myRef.child("MedicineRecord").child(PersonID).child(key).setValue(getData());
 
             Intent intent = new Intent(getApplicationContext(), MyBroadcastReceiver.class);
@@ -66,6 +74,11 @@ public class UpdateActivity extends AppCompatActivity {
                         new Intent(UpdateActivity.this,DisplayMedicineActivity.class)
                                 .putExtra("UserName",account.getDisplayName()).putExtra("Id",account.getId())
                 );
+            }else{
+                InputValidationHandler.showDialog(UpdateActivity.this);
+            }
+
+
             }
         });
         cancelBtn.setOnClickListener(new View.OnClickListener() {
@@ -135,6 +148,8 @@ public class UpdateActivity extends AppCompatActivity {
             }
         }
 
+
+
         MedicineRecordHandler mrh=new MedicineRecordHandler(
                 nameValue,
                 noteValue,
@@ -146,4 +161,10 @@ public class UpdateActivity extends AppCompatActivity {
      return mrh;
     }
 
+
+
+
+
 }
+
+

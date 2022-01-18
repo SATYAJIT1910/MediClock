@@ -3,7 +3,9 @@ package com.satyajitghosh.mediclock;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -120,6 +122,10 @@ public class HomeActivity extends AppCompatActivity {
                    }
                 }
 
+               if(InputValidationHandler.inputValidation(HomeActivity.this, name.getEditText().getText().toString(),time)){
+
+
+
                 MedicineRecordHandler mrh=new MedicineRecordHandler(
                         name.getEditText().getText().toString(),
                         note.getEditText().getText().toString(),
@@ -130,6 +136,9 @@ public class HomeActivity extends AppCompatActivity {
                 myRef.child("MedicineRecord").child(PersonID).child(Long.toString(maxID+1)).setValue(mrh);
                 AlarmManagerHandler.initAlarm(mrh,getApplicationContext());
                 Toast.makeText(getApplicationContext(), "Added Successfully", Toast.LENGTH_SHORT).show();
+               }else{
+                   InputValidationHandler.showDialog(HomeActivity.this);
+               }
             }
         });
 
