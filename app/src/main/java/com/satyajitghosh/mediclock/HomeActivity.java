@@ -38,7 +38,6 @@ public class HomeActivity extends AppCompatActivity {
     private Button submitBtn;
     private RadioGroup radioGroup;
     private MaterialButtonToggleGroup materialButtonToggleGroup;
-    private long maxID;
     private boolean before_food;
     private Button show;
 
@@ -53,7 +52,6 @@ public class HomeActivity extends AppCompatActivity {
       materialButtonToggleGroup=findViewById(R.id.toggleButton);
       radioGroup=findViewById(R.id.radioGroup);
       show=findViewById(R.id.show);
-      maxID=0;
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
@@ -68,28 +66,7 @@ public class HomeActivity extends AppCompatActivity {
         Intent intent = getIntent();
        String nameUser = intent.getStringExtra("UserName");
        String PersonID=intent.getStringExtra("Id");
-//        logout=findViewById(R.id.button);
-//        logout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                mGoogleSignInClient.signOut();
-//                Toast.makeText(getApplicationContext(),"Logged Out",Toast.LENGTH_LONG).show();
-//                startActivity(new Intent(HomeActivity.this,MainActivity.class));
-//            }
-//        });
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    maxID=(snapshot.child("MedicineRecord").child(PersonID).getChildrenCount());
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
 
         show.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,7 +107,7 @@ public class HomeActivity extends AppCompatActivity {
                         before_food,
                         time
                  );
-                myRef.child("MedicineRecord").child(PersonID).child(Long.toString(maxID+1)).setValue(mrh);
+                myRef.child("MedicineRecord").child(PersonID).child(mrh.getName()+Integer.toString(AlarmManagerHandler.setUniqueNotificationId())).setValue(mrh);
                 AlarmManagerHandler.initAlarm(mrh,getApplicationContext());
                 Toast.makeText(getApplicationContext(), "Added Successfully", Toast.LENGTH_SHORT).show();
                }else{
