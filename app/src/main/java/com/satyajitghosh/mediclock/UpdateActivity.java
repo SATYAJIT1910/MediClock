@@ -55,6 +55,12 @@ public class UpdateActivity extends AppCompatActivity {
             public void onClick(View view) {
 
             myRef.child("MedicineRecord").child(PersonID).child(key).setValue(getData());
+
+            Intent intent = new Intent(getApplicationContext(), MyBroadcastReceiver.class);
+
+           // AlarmManagerHandler.cancelAlarm(getApplicationContext(),intent,getData().getNotificationID());
+            AlarmManagerHandler.initAlarm(getData(),getApplicationContext());
+
                 startActivity(
                         new Intent(UpdateActivity.this,DisplayMedicineActivity.class)
                                 .putExtra("UserName",account.getDisplayName()).putExtra("Id",account.getId())

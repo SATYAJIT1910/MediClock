@@ -131,7 +131,7 @@ public class AlarmManagerHandler extends AppCompatActivity {
             }
 
            // AlarmManagerHandler.addAlert(context, hour, minutes, medicineName, (int) Math.random() * 1000);
-            AlarmManagerHandler.addAlert(context, 19, 12, medicineName,notificationID,Food); //for testing
+            AlarmManagerHandler.addAlert(context, 10, 12, medicineName,notificationID,Food); //for testing
         }
     }
 
