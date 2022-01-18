@@ -25,6 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.lang.Math;
+import java.util.Random;
 
 public class HomeActivity extends AppCompatActivity {
     private Button logout;
@@ -38,7 +39,7 @@ public class HomeActivity extends AppCompatActivity {
     private long maxID;
     private boolean before_food;
     private Button show;
-    private static int notificationID=(int)Math.random()*10000;
+    private static int notificationID=(int)new Random().nextInt(99999 - 00001) + 00001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
