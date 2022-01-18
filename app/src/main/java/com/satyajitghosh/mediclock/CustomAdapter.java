@@ -23,7 +23,7 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 
     public class CustomAdapter extends ArrayAdapter<MedicineRecordHandler> {
-        private ArrayList<MedicineRecordHandler> arrayList;
+        private final ArrayList<MedicineRecordHandler> arrayList;
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getContext());

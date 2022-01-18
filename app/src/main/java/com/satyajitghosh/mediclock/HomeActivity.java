@@ -78,11 +78,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-               if(R.id.radio_button_1==radioGroup.getCheckedRadioButtonId()){
-                   before_food=true;
-               }else{
-                   before_food=false;
-               }
+                before_food= R.id.radio_button_1 == radioGroup.getCheckedRadioButtonId();
                List<Integer> arr= materialButtonToggleGroup.getCheckedButtonIds();
                ArrayList<TIME.AlarmBundle> time=new ArrayList<>();
                for (Integer i:arr){
@@ -107,7 +103,7 @@ public class HomeActivity extends AppCompatActivity {
                         before_food,
                         time
                  );
-                myRef.child("MedicineRecord").child(PersonID).child(mrh.getName()+Integer.toString(AlarmManagerHandler.setUniqueNotificationId())).setValue(mrh);
+                myRef.child("MedicineRecord").child(PersonID).child(mrh.getName()+ AlarmManagerHandler.setUniqueNotificationId()).setValue(mrh);
                 AlarmManagerHandler.initAlarm(mrh,getApplicationContext());
                 Toast.makeText(getApplicationContext(), "Added Successfully", Toast.LENGTH_SHORT).show();
                }else{

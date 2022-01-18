@@ -9,12 +9,8 @@ import java.util.ArrayList;
 public class InputValidationHandler {
 
     public static boolean inputValidation(Context context, String medicineName, ArrayList<TIME.AlarmBundle> time) {
-        if (medicineName.isEmpty() || time.isEmpty()) {
-            //Toast.makeText(getApplicationContext(), "Required details are empty", Toast.LENGTH_LONG).show();
-
-            return false;
-        }
-        return true;
+        //Toast.makeText(getApplicationContext(), "Required details are empty", Toast.LENGTH_LONG).show();
+        return !medicineName.isEmpty() && !time.isEmpty();
     }
     public static void showDialog(Context context){
         AlertDialog.Builder builder

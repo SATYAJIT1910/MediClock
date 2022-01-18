@@ -8,7 +8,8 @@ public class TIME {
    public static class AlarmBundle {
       String time;
       int notificationID;
-      AlarmBundle(){};
+      AlarmBundle(){}
+
       AlarmBundle(String time, int notificationID){
          this.time=time;
          this.notificationID=notificationID;

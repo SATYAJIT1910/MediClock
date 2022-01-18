@@ -116,7 +116,6 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/up_textView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/lemonGreen"
