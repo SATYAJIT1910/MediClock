@@ -30,7 +30,7 @@ public class DisplayMedicineActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private ArrayList<MedicineRecordHandler> arrayList;
     protected GoogleSignInAccount account;
-
+    private CustomAdapter c;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +42,7 @@ public class DisplayMedicineActivity extends AppCompatActivity {
         TextView account_user_name_view = findViewById(R.id.account_user_name_view);
         account_user_name_view.setText("Hi, " + account.getDisplayName());
 
-        CustomAdapter c = new CustomAdapter(getApplicationContext(), arrayList);
+        c = new CustomAdapter(getApplicationContext(), arrayList);
         listview.setAdapter(c);
 
         mDatabase.addValueEventListener(new ValueEventListener() {
@@ -52,29 +52,12 @@ public class DisplayMedicineActivity extends AppCompatActivity {
                     findViewById(R.id.empty).setVisibility(View.INVISIBLE);
                     findViewById(R.id.emptyText).setVisibility(View.INVISIBLE);
 //                    long n = snapshot.child("MedicineRecord").child(account.getId()).getChildrenCount();
-
-
-                    Iterator<DataSnapshot> items = snapshot.child("MedicineRecord").child(account.getId()).getChildren().iterator();
-
-                    while (items.hasNext()) {
-                        DataSnapshot item = items.next();
-
-                       MedicineRecordHandler mrd = item.getValue(MedicineRecordHandler.class);
-                        Log.d("DisplayProblem",mrd.toString());
-
-                        mrd.key = item.getKey();
-                        // arrayList.add(mrd);
-                      c.UpdateArrayList(mrd);
-                    }
-                    c.requestUpdate();
-                } else {
+                      refreshData(snapshot);
+                }else{
                     findViewById(R.id.empty).setVisibility(View.VISIBLE);
                     findViewById(R.id.emptyText).setVisibility(View.VISIBLE);
                 }
-
-
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(getApplicationContext(), "Check you internet connection", Toast.LENGTH_SHORT).show();
@@ -83,9 +66,28 @@ public class DisplayMedicineActivity extends AppCompatActivity {
         findViewById(R.id.add_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(DisplayMedicineActivity.this, HomeActivity.class).putExtra("UserName", account.getDisplayName()).putExtra("Id", account.getId()));
+                startActivity(new Intent(DisplayMedicineActivity.this, HomeActivity.class).putExtra("UserName", account.getDisplayName()).putExtra("Id", account.getId())
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK)
+                );
             }
         });
     }
 
+    public void refreshData(DataSnapshot snapshot) {
+        Iterator<DataSnapshot> items = snapshot.child("MedicineRecord").child(account.getId()).getChildren().iterator();
+        while (items.hasNext()) {
+            DataSnapshot item = items.next();
+
+            MedicineRecordHandler mrd = item.getValue(MedicineRecordHandler.class);
+            Log.d("DisplayProblem", mrd.toString());
+
+            mrd.key = item.getKey();
+            // arrayList.add(mrd);
+            c.UpdateArrayList(mrd);
+        }
+        c.requestUpdate();
+
     }
+
+}
+

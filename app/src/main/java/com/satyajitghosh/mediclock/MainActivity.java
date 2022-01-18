@@ -38,7 +38,9 @@ public class MainActivity extends AppCompatActivity {
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         if(account!=null){
             String personName = account.getDisplayName();
-            startActivity(new Intent(MainActivity.this,DisplayMedicineActivity.class).putExtra("UserName",personName).putExtra("Id",account.getId()));
+            startActivity(new Intent(MainActivity.this,DisplayMedicineActivity.class).putExtra("UserName",personName).putExtra("Id",account.getId())
+                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK)
+            );
         }
         setContentView(R.layout.activity_main);
         // Set the dimensions of the sign-in button.
@@ -74,7 +76,9 @@ public class MainActivity extends AppCompatActivity {
             String personName = account.getDisplayName();
 
             // Signed in successfully, show authenticated UI.
-            startActivity(new Intent(MainActivity.this,HomeActivity.class).putExtra("UserName",personName).putExtra("Id",account.getId()));
+            startActivity(new Intent(MainActivity.this,HomeActivity.class).putExtra("UserName",personName).putExtra("Id",account.getId())
+                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK)
+            );
 
 
         } catch (ApiException e) {
