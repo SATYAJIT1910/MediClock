@@ -120,7 +120,6 @@ import java.util.ArrayList;
                     i.putExtra("note",mrd.getNotes());
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); //add this line
                     i.putExtra("beforeFood",mrd.getBeforeFood());
-                    i.putExtra("time",mrd.getReminder());
                     i.putExtra("key",mrd.key);
                     getContext().startActivity(i);
                 }

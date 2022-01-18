@@ -98,24 +98,13 @@ public class UpdateActivity extends AppCompatActivity {
         String nameValue=intent.getStringExtra("name");
         String noteValue=intent.getStringExtra("note");
         Boolean beforeFood=intent.getBooleanExtra("beforeFood",true);
-        ArrayList<String> time= intent.getStringArrayListExtra("time");
-        //Log.d("CheckValue",Boolean.toString(beforeFood));
+
+
         if(beforeFood){
             radioGroup.check(R.id.up_radio_button_1);
         }
         else{
             radioGroup.check(R.id.up_radio_button_2);
-        }
-        for(String i:time){
-            if(i.contains(TIME.MORNING)){
-                materialButtonToggleGroup.check(R.id.up_morning);
-            }
-            else if(i.contains(TIME.AFTERNOON)){
-                materialButtonToggleGroup.check(R.id.up_lunch);
-            }
-            else if(i.contains(TIME.NIGHT)){
-                materialButtonToggleGroup.check(R.id.up_night);
-            }
         }
 
         name.getEditText().setText(nameValue);
