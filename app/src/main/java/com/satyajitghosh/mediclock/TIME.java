@@ -1,5 +1,11 @@
 package com.satyajitghosh.mediclock;
 
+/**
+ * This class is used for storing the information of times , corresponding to Morning,Afternoon,Night declarations.
+ * The inner class AlarmBundle is used to store the time and its notificationId in a bundle
+ * @author SATYAJIT GHOSH
+ * @since 1.0.0
+ */
 public class TIME {
    public static String MORNING="0800";
    public static String AFTERNOON="1400";

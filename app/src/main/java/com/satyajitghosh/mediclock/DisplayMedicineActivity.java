@@ -24,7 +24,14 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Objects;
 
+/**
+ * This activity is used to fetch the data from the FireBase DataBase and to populate it to the arraylist of CustomAdapter.
+ *
+ * @author SATYAJIT GHOSH
+ * @since 1.0.0
+ * */
 public class DisplayMedicineActivity extends AppCompatActivity {
     private ListView listview;
     private DatabaseReference mDatabase;
@@ -35,12 +42,14 @@ public class DisplayMedicineActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_medicine);
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        listview = findViewById(R.id.listview);
+
         account = GoogleSignIn.getLastSignedInAccount(this);
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("MedicineRecord").child(Objects.requireNonNull(account.getId())); //Takes the relative path of the user to get the instance of only that user not others.
+        listview = findViewById(R.id.listview);
+
         arrayList = new ArrayList<>();
         TextView account_user_name_view = findViewById(R.id.account_user_name_view);
-        account_user_name_view.setText("Hi, " + account.getDisplayName());
+        account_user_name_view.setText("Hi, " + account.getDisplayName()); //This is used to show the name of user on screen
 
         c = new CustomAdapter(getApplicationContext(), arrayList);
         listview.setAdapter(c);
@@ -51,7 +60,6 @@ public class DisplayMedicineActivity extends AppCompatActivity {
                 if (snapshot.exists()) {
                     findViewById(R.id.empty).setVisibility(View.INVISIBLE);
                     findViewById(R.id.emptyText).setVisibility(View.INVISIBLE);
-//                    long n = snapshot.child("MedicineRecord").child(account.getId()).getChildrenCount();
                       refreshData(snapshot);
                 }else{
                     findViewById(R.id.empty).setVisibility(View.VISIBLE);
@@ -73,16 +81,18 @@ public class DisplayMedicineActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * This method is used to update the arraylist on CustomAdapter and refreshes the listview
+     * @param snapshot it gives the snapshot of the database
+     */
     public void refreshData(DataSnapshot snapshot) {
-        Iterator<DataSnapshot> items = snapshot.child("MedicineRecord").child(account.getId()).getChildren().iterator();
+        Iterator<DataSnapshot> items = snapshot.getChildren().iterator();
         while (items.hasNext()) {
             DataSnapshot item = items.next();
 
             MedicineRecordHandler mrd = item.getValue(MedicineRecordHandler.class);
-            Log.d("DisplayProblem", mrd.toString());
 
             mrd.key = item.getKey();
-            // arrayList.add(mrd);
             c.UpdateArrayList(mrd);
         }
         c.requestUpdate();

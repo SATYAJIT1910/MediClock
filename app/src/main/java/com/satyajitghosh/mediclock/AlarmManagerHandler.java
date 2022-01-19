@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.Calendar;
 
 /**
- * This class is used for all handle all the things related to setting up/ cancelling the alarms for Notifications
+ * This class is used to handle all the things related to setting up/ cancelling the alarms for Notifications
  *
  * @author SATYAJIT GHOSH
  * @since 1.0.0
@@ -29,7 +29,7 @@ public class AlarmManagerHandler extends AppCompatActivity {
      * @param context        it provides the context
      * @param hour           it provides the hour to set the alarm
      * @param minute         it provides the minute to set the alarm
-     * @param medicineName   it provides the medicineName to set up the alert , this is further passed to the BroadCastReceiver to show the detail on Notifications.
+     * @param medicineName   it provides the medicineName to set up the alert , this further passed to the BroadCastReceiver to show the detail on Notifications.
      * @param notificationId it provides the notificationID
      * @param Food           it tells whether the medicine is to consume after food/before food.
      */
@@ -47,11 +47,12 @@ public class AlarmManagerHandler extends AppCompatActivity {
                 .putExtra("Food", Food);
 
 
+
+
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, notificationId, intent, 0);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, AlarmManager.INTERVAL_DAY, pendingIntent);
-        // alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, 70000, pendingIntent); //For testing
-        // Toast.makeText(context, "Alarm added",Toast.LENGTH_LONG).show(); //For testing
+       // alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, AlarmManager.INTERVAL_DAY, pendingIntent); //TODO: Remove the comment before production
+         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, 70000, pendingIntent); //For testing
     }
 
     /**
@@ -113,14 +114,14 @@ public class AlarmManagerHandler extends AppCompatActivity {
                 Food = "after food";
             }
 
-            AlarmManagerHandler.addAlert(context, hour, minutes, mrh.getName(), i.getNotificationID(), Food);
-            // AlarmManagerHandler.addAlert(context, 10, 12, mrh.getName(), i.getNotificationID(), Food); //for testing
+           // AlarmManagerHandler.addAlert(context, hour, minutes, mrh.getName(), i.getNotificationID(), Food); //TODO: Remove the comment before production
+             AlarmManagerHandler.addAlert(context, 10, 12, mrh.getName(), i.getNotificationID(), Food); //for testing
         }
     }
 
     /**
-     * This method is used to generate unique set of NotificationID.
-     * This method is also used along with medicineName to construct the child name in FireBase DataBase.
+     * This method is used to generate unique set of RequestCode for the PendingIntents of AlarmManager.
+     * This method is also used along with medicineName to construct the child name in FireBase DataBase & to give unique id to notifications.
      *
      * @return a random generated number
      */

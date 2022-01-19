@@ -2,9 +2,11 @@ package com.satyajitghosh.mediclock;
 
 import java.util.ArrayList;
 
-
-
-
+/**
+ * This class is used to handle all the Records for each entry.
+ * @author SATYAJIT GHOSH
+ * @since 1.0.0
+ * */
 public class MedicineRecordHandler {
     public String key;
     String name;
@@ -16,10 +18,12 @@ public class MedicineRecordHandler {
         this.name = name;
         this.notes = notes;
         this.beforeFood = beforeFood;
-       this.reminder = reminder;
+        this.reminder = reminder;
 
     }
-    public MedicineRecordHandler(){}
+
+    public MedicineRecordHandler() {
+    }
 
     public String getName() {
         return name;
@@ -53,14 +57,4 @@ public class MedicineRecordHandler {
         this.reminder = reminder;
     }
 
-    @Override
-    public String toString() {
-        return "MedicineRecordHandler{" +
-                "key='" + key + '\'' +
-                ", name='" + name + '\'' +
-                ", notes='" + notes + '\'' +
-                ", beforeFood=" + beforeFood +
-                ", reminder=" + reminder +
-                '}';
-    }
 }

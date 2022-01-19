@@ -6,13 +6,29 @@ import android.content.DialogInterface;
 
 import java.util.ArrayList;
 
+/**
+ * This class is used for input validation and alerting user about it.
+ *
+ * @author SATYAJIT GHOSH
+ * @since 1.0.0
+ */
 public class InputValidationHandler {
-
+    /**
+     * It validates the user inputs
+     * @param context it provides the context
+     * @param medicineName it provides the name of the medicine
+     * @param time it provides the AlarmBundle
+     * @return it returns true if the input is fine otherwise false
+     */
     public static boolean inputValidation(Context context, String medicineName, ArrayList<TIME.AlarmBundle> time) {
-        //Toast.makeText(getApplicationContext(), "Required details are empty", Toast.LENGTH_LONG).show();
         return !medicineName.isEmpty() && !time.isEmpty();
     }
-    public static void showDialog(Context context){
+
+    /**
+     * It is used to show the dialog box to the user , informing him that all the required fields are not filled.
+     * @param context it provides the context
+     */
+    public static void showDialog(Context context) {
         AlertDialog.Builder builder
                 = new AlertDialog
                 .Builder(context);
@@ -32,32 +48,9 @@ public class InputValidationHandler {
                             public void onClick(DialogInterface dialog,
                                                 int which) {
 
-                                // When the user click yes button
-                                // then app will close
-                                //    finish();
                                 dialog.cancel();
                             }
                         });
-
-//                   // Set the Negative button with No name
-//                   // OnClickListener method is use
-//                   // of DialogInterface interface.
-//                   builder
-//                           .setNegativeButton(
-//                                   "No",
-//                                   new DialogInterface
-//                                           .OnClickListener() {
-//
-//                                       @Override
-//                                       public void onClick(DialogInterface dialog,
-//                                                           int which)
-//                                       {
-//
-//                                           // If user click no
-//                                           // then dialog box is canceled.
-//                                           dialog.cancel();
-//                                       }
-//                                   });
 
 
         // Create the Alert dialog

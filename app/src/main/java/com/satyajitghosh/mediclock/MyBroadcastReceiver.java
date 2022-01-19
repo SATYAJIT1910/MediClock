@@ -10,14 +10,11 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 public class MyBroadcastReceiver extends BroadcastReceiver {
-    private static int notificationId=1;
-
     @Override
     public void onReceive(Context context, Intent intent) {
             String MedicineName=intent.getStringExtra("MedicineName");
             String Food=intent.getStringExtra("Food");
             showNotification(context,MedicineName,Food);
-      //  Toast.makeText(context, MedicineName, Toast.LENGTH_SHORT).show(); //for testing
     }
     public void showNotification(Context context,String MedicineName,String Food){
 
@@ -30,14 +27,9 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
 
-        // notificationId is a unique int for each notification that you must define
-        notificationManager.notify(notificationId++, builder.build());
-
+        // notificationId is a unique id for each notification
+        notificationManager.notify(AlarmManagerHandler.setUniqueNotificationId(), builder.build());
 
     }
-
-
-
-
 
 }
