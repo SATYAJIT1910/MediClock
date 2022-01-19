@@ -51,8 +51,8 @@ public class AlarmManagerHandler extends AppCompatActivity {
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, notificationId, intent, 0);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-       // alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, AlarmManager.INTERVAL_DAY, pendingIntent); //TODO: Remove the comment before production
-         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, 70000, pendingIntent); //For testing
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, AlarmManager.INTERVAL_DAY, pendingIntent);
+       //  alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, 70000, pendingIntent); //TODO: REMOVE THE COMMENT FOR TESTING
     }
 
     /**
@@ -114,8 +114,8 @@ public class AlarmManagerHandler extends AppCompatActivity {
                 Food = "after food";
             }
 
-           // AlarmManagerHandler.addAlert(context, hour, minutes, mrh.getName(), i.getNotificationID(), Food); //TODO: Remove the comment before production
-             AlarmManagerHandler.addAlert(context, 10, 12, mrh.getName(), i.getNotificationID(), Food); //for testing
+            AlarmManagerHandler.addAlert(context, hour, minutes, mrh.getName(), i.getNotificationID(), Food);
+            // AlarmManagerHandler.addAlert(context, 10, 12, mrh.getName(), i.getNotificationID(), Food); //TODO: REMOVE THE COMMENT FOR TESTING
         }
     }
 
