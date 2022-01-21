@@ -32,8 +32,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- For AlarmService -->
         <receiver android:name="MyBroadcastReceiver" >
         </receiver>
+        <!-- For AlarmService -->
+        <service android:name=".MyAlarmService"/>
     </application>
 
 

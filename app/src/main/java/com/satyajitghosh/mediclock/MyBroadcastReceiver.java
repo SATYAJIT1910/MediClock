@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
@@ -12,24 +13,19 @@ import androidx.core.app.NotificationManagerCompat;
 public class MyBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
+
             String MedicineName=intent.getStringExtra("MedicineName");
             String Food=intent.getStringExtra("Food");
-            showNotification(context,MedicineName,Food);
-    }
-    public void showNotification(Context context,String MedicineName,String Food){
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, AlarmManagerHandler.CHANNEL_ID)
-                .setSmallIcon(R.drawable.logo)
-                .setContentTitle("MediClock Reminder")
-                .setContentText("Hey, Take your medicine "+MedicineName+" "+Food+".")
-                .setStyle(new NotificationCompat.BigTextStyle())
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            context.startForegroundService(new Intent(context,MyAlarmService.class)
+                        .putExtra("MedicineName",MedicineName)
+                        .putExtra("Food",Food)
+            );
+        }
 
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-
-        // notificationId is a unique id for each notification
-        notificationManager.notify(AlarmManagerHandler.setUniqueNotificationId(), builder.build());
 
     }
+
 
 }
