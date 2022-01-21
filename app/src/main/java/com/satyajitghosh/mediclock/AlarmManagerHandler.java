@@ -59,8 +59,8 @@ public class AlarmManagerHandler extends AppCompatActivity {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
        try{
 
-        // alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, AlarmManager.INTERVAL_DAY, pendingIntent);
-         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, 70000, pendingIntent); //TODO: REMOVE THE COMMENT FOR TESTING
+         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, AlarmManager.INTERVAL_DAY, pendingIntent);
+       //  alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, 70000, pendingIntent); //TODO: REMOVE THE COMMENT FOR TESTING
        }catch (Exception e){
            Log.d("AlarmManagerError",e.toString());
            Toast.makeText(context.getApplicationContext(), "We cannot setup reminder on your Device", Toast.LENGTH_LONG).show();
@@ -126,8 +126,8 @@ public class AlarmManagerHandler extends AppCompatActivity {
                 Food = "after food";
             }
 
-           // AlarmManagerHandler.addAlert(context, hour, minutes, mrh.getName(), i.getNotificationID(), Food);
-            AlarmManagerHandler.addAlert(context, 10, 12, mrh.getName(), i.getNotificationID(), Food); //TODO: REMOVE THE COMMENT FOR TESTING
+           AlarmManagerHandler.addAlert(context, hour, minutes, mrh.getName(), i.getNotificationID(), Food);
+           // AlarmManagerHandler.addAlert(context, 10, 12, mrh.getName(), i.getNotificationID(), Food); //TODO: REMOVE THE COMMENT FOR TESTING
         }
     }
 
