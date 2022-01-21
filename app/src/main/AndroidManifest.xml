@@ -3,6 +3,10 @@
     package="com.satyajitghosh.mediclock">
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.SET_ALARM"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <!-- For apps with targetSDK=31 (Android 12) -->
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
     <application
         android:allowBackup="true"
         android:icon="@drawable/mediclock_icon"
@@ -28,8 +32,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- For AlarmService -->
         <receiver android:name="MyBroadcastReceiver" >
         </receiver>
+        <!-- For AlarmService -->
+        <service android:name=".MyAlarmService"/>
     </application>
 
 
