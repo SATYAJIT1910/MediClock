@@ -19,7 +19,7 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
             String MedicineName=intent.getStringExtra("MedicineName");
             String Food=intent.getStringExtra("Food");
 
-            context.startForegroundService(new Intent(context,MyAlarmService.class)
+            context.startService(new Intent(context,MyAlarmService.class)
                         .putExtra("MedicineName",MedicineName)
                         .putExtra("Food",Food)
             );

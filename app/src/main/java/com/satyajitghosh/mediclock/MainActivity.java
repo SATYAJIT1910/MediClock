@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         // the GoogleSignInAccount will be non-null.
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         if (account != null) {
+            startService(new Intent(this,AlarmRefreshService.class));
             String personName = account.getDisplayName();
             startActivity(new Intent(MainActivity.this, DisplayMedicineActivity.class).putExtra("UserName", personName).putExtra("Id", account.getId())
                     .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK)
