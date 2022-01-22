@@ -66,7 +66,7 @@ public class UpdateActivity extends AppCompatActivity {
 
                     myRef.child(key).setValue(getData()); //Updates the data to the FireBase DataBase
 
-                    AlarmManagerHandler.initAlarm(getData(), getApplicationContext());
+                  //  AlarmManagerHandler.initAlarm(getData(), getApplicationContext());
 
                     startActivity(
                             new Intent(UpdateActivity.this, DisplayMedicineActivity.class)

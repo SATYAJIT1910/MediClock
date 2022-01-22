@@ -37,6 +37,7 @@
         </receiver>
         <!-- For AlarmService -->
         <service android:name=".MyAlarmService"/>
+        <service android:name=".AlarmRefreshService"/>
     </application>
 
 
