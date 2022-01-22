@@ -46,9 +46,14 @@ public class AlarmManagerHandler extends AppCompatActivity {
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.HOUR_OF_DAY, hour);
         cal.set(Calendar.MINUTE, minute);
-        cal.set(Calendar.SECOND, 00);
-        long time = cal.getTimeInMillis();
+        cal.set(Calendar.SECOND, 0);
 
+        // if alarm time has already passed, increment day by 1
+        if (cal.getTimeInMillis() <= System.currentTimeMillis()) {
+            cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH) + 1);
+        }
+
+        long time = cal.getTimeInMillis();
 
         Intent intent = new Intent(context, MyBroadcastReceiver.class)
                 .putExtra("MedicineName", medicineName)
