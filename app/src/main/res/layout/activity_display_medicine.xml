@@ -31,10 +31,23 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="false"
         android:layout_alignParentBottom="false"
-        android:layout_marginHorizontal="40dp"
+        android:layout_marginHorizontal="60dp"
         android:layout_marginTop="60dp"
         android:clickable="true"
         app:srcCompat="@drawable/ic_baseline_add_box_24"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <ImageView
+        android:id="@+id/setting_btn"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="false"
+        android:layout_alignParentBottom="false"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:clickable="true"
+        app:srcCompat="@drawable/ic_baseline_settings_24"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <ImageView

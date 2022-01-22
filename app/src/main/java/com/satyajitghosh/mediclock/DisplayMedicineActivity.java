@@ -79,6 +79,12 @@ public class DisplayMedicineActivity extends AppCompatActivity {
                 );
             }
         });
+        findViewById(R.id.setting_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),TimeChangeActivity.class));
+            }
+        });
     }
 
     /**
