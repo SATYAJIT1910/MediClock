@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,10 +51,10 @@ public class DisplayMedicineActivity extends AppCompatActivity {
         arrayList = new ArrayList<>();
         TextView account_user_name_view = findViewById(R.id.account_user_name_view);
         account_user_name_view.setText("Hi, " + account.getDisplayName()); //This is used to show the name of user on screen
+        account_user_name_view.startAnimation(AnimationUtils.loadAnimation(this,R.anim.fade));
 
         c = new CustomAdapter(getApplicationContext(), arrayList);
         listview.setAdapter(c);
-
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

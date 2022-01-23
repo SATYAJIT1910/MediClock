@@ -5,8 +5,10 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.SET_ALARM" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" /> <!-- For apps with targetSDK=31 (Android 12) -->
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
         android:allowBackup="true"
@@ -15,6 +17,9 @@
         android:roundIcon="@drawable/mediclock_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.MediClock">
+        <activity
+            android:name=".RingActivity"
+            android:exported="false" />
         <activity
             android:name=".TimeChangeActivity"
             android:exported="false" />
@@ -36,9 +41,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity> <!-- For AlarmService -->
-        <receiver android:name=".MyBroadcastReceiver"></receiver> <!-- For AlarmService -->
-        <service android:name=".MyAlarmService" />
-        <service android:name=".AlarmRefreshService" />
+        <receiver android:name=".MyBroadcastReceiver" /> <!-- For AlarmService -->
+        <service
+            android:name=".MyAlarmService"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name=".AlarmRefreshService"
+            android:enabled="true"
+            android:exported="true" />
     </application>
 
 </manifest>
