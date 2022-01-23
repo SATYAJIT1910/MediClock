@@ -48,7 +48,7 @@ public class AlarmManagerHandler extends AppCompatActivity {
         cal.set(Calendar.MINUTE, minute);
         cal.set(Calendar.SECOND, 0);
 
-        // if alarm time has already passed, increment day by 1
+         //if alarm time has already passed, increment day by 1
         if (cal.getTimeInMillis() <= System.currentTimeMillis()) {
             cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH) + 1);
         }
@@ -57,7 +57,8 @@ public class AlarmManagerHandler extends AppCompatActivity {
 
         Intent intent = new Intent(context, MyBroadcastReceiver.class)
                 .putExtra("MedicineName", medicineName)
-                .putExtra("Food", Food);
+                .putExtra("Food", Food)
+                .addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
 
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, notificationId, intent, 0);
@@ -65,7 +66,7 @@ public class AlarmManagerHandler extends AppCompatActivity {
        try{
 
          alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, AlarmManager.INTERVAL_DAY, pendingIntent);
-       //  alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, 70000, pendingIntent); //TODO: REMOVE THE COMMENT FOR TESTING
+          // alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, 70000, pendingIntent); //TODO: REMOVE THE COMMENT FOR TESTING
        }catch (Exception e){
            Log.d("AlarmManagerError",e.toString());
            Toast.makeText(context.getApplicationContext(), "We cannot setup reminder on your Device", Toast.LENGTH_LONG).show();
@@ -131,8 +132,8 @@ public class AlarmManagerHandler extends AppCompatActivity {
                 Food = "after food";
             }
 
-           AlarmManagerHandler.addAlert(context, hour, minutes, mrh.getName(), i.getNotificationID(), Food);
-           // AlarmManagerHandler.addAlert(context, 10, 12, mrh.getName(), i.getNotificationID(), Food); //TODO: REMOVE THE COMMENT FOR TESTING
+          AlarmManagerHandler.addAlert(context, hour, minutes, mrh.getName(), i.getNotificationID(), Food);
+         //   AlarmManagerHandler.addAlert(context, 15,6 , mrh.getName(), i.getNotificationID(), Food); //TODO: REMOVE THE COMMENT FOR TESTING
         }
     }
 

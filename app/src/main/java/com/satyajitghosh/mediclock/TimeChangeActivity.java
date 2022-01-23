@@ -7,6 +7,9 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -27,6 +30,13 @@ public class TimeChangeActivity extends AppCompatActivity {
         morning_edit_time=findViewById(R.id.morning_edit_time);
         lunch_edit_time=findViewById(R.id.afternoon_edit_time);
         night_edit_time=findViewById(R.id.night_edit_time);
+
+        Animation animation= AnimationUtils.loadAnimation(this,R.anim.fade);
+
+        morning_edit_time.startAnimation(animation);
+        lunch_edit_time.startAnimation(animation);
+        night_edit_time.startAnimation(animation);
+
 
         morning_edit_time.setOnClickListener(new View.OnClickListener() {
             @Override
