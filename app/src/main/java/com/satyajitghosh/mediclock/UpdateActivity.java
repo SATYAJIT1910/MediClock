@@ -61,12 +61,11 @@ public class UpdateActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if (InputValidationHandler.inputValidation(UpdateActivity.this, getData().getName(), getData().getReminder())) {
+                if (InputValidationHandler.inputValidation(getData().getName(), getData().getReminder())) {
 
 
                     myRef.child(key).setValue(getData()); //Updates the data to the FireBase DataBase
 
-                    //  AlarmManagerHandler.initAlarm(getData(), getApplicationContext());
 
                     startActivity(
                             new Intent(UpdateActivity.this, DisplayMedicineActivity.class)

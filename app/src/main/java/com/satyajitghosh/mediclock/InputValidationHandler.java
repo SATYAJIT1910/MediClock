@@ -16,12 +16,11 @@ public class InputValidationHandler {
     /**
      * It validates the user inputs
      *
-     * @param context      it provides the context
      * @param medicineName it provides the name of the medicine
      * @param time         it provides the AlarmBundle
      * @return it returns true if the input is fine otherwise false
      */
-    public static boolean inputValidation(Context context, String medicineName, ArrayList<TIME.AlarmBundle> time) {
+    public static boolean inputValidation(String medicineName, ArrayList<TIME.AlarmBundle> time) {
         return !medicineName.isEmpty() && !time.isEmpty() && medicineName.length() <= 15;
     }
 

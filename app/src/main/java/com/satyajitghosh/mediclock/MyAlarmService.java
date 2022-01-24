@@ -11,7 +11,12 @@ import android.os.Vibrator;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
-
+/**
+ * This service is started by the broadcastReceiver. It it is used for showing the notifications and alarms .
+ * @author SATYAJIT GHOSH
+ * @since 1.5.0
+ *
+ * */
 public class MyAlarmService extends Service {
 
     private Vibrator vibrator;

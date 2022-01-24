@@ -88,8 +88,8 @@ public class HomeActivity extends AppCompatActivity {
                     }
                 }
 
-                //It checks for all the required fields are filed with data or not .
-                if (InputValidationHandler.inputValidation(HomeActivity.this, name.getEditText().getText().toString(), time)) {
+                //It checks for all the required fields are filled with data or not .
+                if (InputValidationHandler.inputValidation(name.getEditText().getText().toString(), time)) {
 
                     MedicineRecordHandler mrh = new MedicineRecordHandler(
                             name.getEditText().getText().toString(),
@@ -98,7 +98,6 @@ public class HomeActivity extends AppCompatActivity {
                             time
                     );
                     myRef.child("MedicineRecord").child(PersonID).child(mrh.getName() + AlarmManagerHandler.setUniqueNotificationId()).setValue(mrh); // It writes the new data to FireBase Database
-                    //  AlarmManagerHandler.initAlarm(mrh, getApplicationContext()); //It set up the alarm for that record
                     Toast.makeText(getApplicationContext(), "Added Successfully", Toast.LENGTH_SHORT).show();
                 } else {
                     InputValidationHandler.showDialog(HomeActivity.this); // It shows a dialog box informing user to fill the required fields.

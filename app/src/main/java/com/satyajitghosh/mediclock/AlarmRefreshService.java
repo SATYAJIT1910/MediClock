@@ -3,7 +3,6 @@ package com.satyajitghosh.mediclock;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,16 +16,21 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Objects;
-
+/**
+ * This service starts at the program launch from the MainActivity and it refreshes all the alarms after fetching the details from the fireBase Database.
+ * It is also used for adding and updating data to the firebase.
+ * AlarmManager class doesn't store the alarms on the device restart , so it is also necessary.
+ * @author SATYAJIT GHOSH
+ * @since 1.5.0
+ *
+ * */
 public class AlarmRefreshService extends Service {
     private DatabaseReference mDatabase;
     protected GoogleSignInAccount account;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d("RefreshService", "It is refreshed");
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference().child("MedicineRecord").child(Objects.requireNonNull(account.getId()));
         mDatabase.addChildEventListener(new ChildEventListener() {
             @Override
@@ -73,7 +77,6 @@ public class AlarmRefreshService extends Service {
 
         MedicineRecordHandler mrd = snapshot.getValue(MedicineRecordHandler.class);
         AlarmManagerHandler.initAlarm(mrd, getApplicationContext());
-        Log.d("RefreshService", mrd.getName() + " refreshed");
     }
 
 
