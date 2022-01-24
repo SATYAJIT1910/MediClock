@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        getTime(); // It refreshes the times from the shared preferences
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         // the GoogleSignInAccount will be non-null.
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         if (account != null) {
-            getTime(); // It refreshes the times from the shared preferences
+
             startService(new Intent(this, AlarmRefreshService.class));
             String personName = account.getDisplayName();
             startActivity(new Intent(MainActivity.this, DisplayMedicineActivity.class).putExtra("UserName", personName).putExtra("Id", account.getId())
@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
             String personName = account.getDisplayName();
-
+            //set the times
             // Signed in successfully, show authenticated UI.
             startActivity(new Intent(MainActivity.this, HomeActivity.class).putExtra("UserName", personName).putExtra("Id", account.getId())
                     .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -94,9 +94,20 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+    public void initSharedPref(){
+        SharedPreferences sharedPref = getSharedPreferences("MySharedPref", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("MORNING", TIME.MORNING);
+        editor.putString("AFTERNOON", TIME.AFTERNOON);
+        editor.putString("NIGHT", TIME.NIGHT);
+        editor.apply();
+    }
 
     public void getTime() {
         SharedPreferences sharedPref = getSharedPreferences("MySharedPref", MODE_PRIVATE);
+        if( sharedPref.getString("MORNING", "").length()==0){ // This satisfy no SharedPreferences exist
+            initSharedPref();
+        }
         TIME.MORNING = sharedPref.getString("MORNING", "");
         TIME.AFTERNOON = sharedPref.getString("AFTERNOON", "");
         TIME.NIGHT = sharedPref.getString("NIGHT", "");
