@@ -9,9 +9,9 @@
 
     <Button
         android:id="@+id/button_dismiss"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="118dp"
+        android:layout_width="109dp"
+        android:layout_height="53dp"
+        android:layout_marginBottom="51dp"
         android:text="DISMISS"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,17 +20,18 @@
 
     <TextView
         android:id="@+id/medicine_name_view"
-        android:layout_width="253dp"
-        android:layout_height="364dp"
-        android:layout_marginTop="236dp"
-        android:layout_marginBottom="131dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="63dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="25dp"
         android:fontFamily="@font/robotobold"
         android:text="I have taken my Medicine"
         android:textColor="@color/white"
         android:textSize="60sp"
         app:layout_constraintBottom_toTopOf="@+id/button_dismiss"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

@@ -64,15 +64,16 @@ public class MyAlarmService extends Service {
 
 
     public void showNotification(Context context, String MedicineName, String Food) {
-        Intent notificationIntent = new Intent(this, RingActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+        Intent notificationIntent = new Intent(this, RingActivity.class).putExtra("MedicineName",MedicineName).putExtra("food",Food);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         Notification notification = new NotificationCompat.Builder(context, AlarmManagerHandler.CHANNEL_ID)
                 .setSmallIcon(R.drawable.logo)
                 .setContentTitle("MediClock Reminder")
                 .setContentText("Hey, Take your medicine "+MedicineName+" "+Food+".")
                 .setStyle(new NotificationCompat.BigTextStyle())
-                .setContentIntent(pendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setCategory(NotificationCompat.CATEGORY_ALARM)
+                .setFullScreenIntent(pendingIntent, true)
                 .build();
 
 
