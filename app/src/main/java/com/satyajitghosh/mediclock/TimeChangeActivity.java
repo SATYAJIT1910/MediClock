@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -31,6 +33,11 @@ public class TimeChangeActivity extends AppCompatActivity {
         lunch_edit_time=findViewById(R.id.afternoon_edit_time);
         night_edit_time=findViewById(R.id.night_edit_time);
 
+        morning_edit_time.setText(TIMEClassToTextView(TIME.MORNING));
+        lunch_edit_time.setText(TIMEClassToTextView(TIME.AFTERNOON));
+        night_edit_time.setText(TIMEClassToTextView(TIME.NIGHT));
+
+
         Animation animation= AnimationUtils.loadAnimation(this,R.anim.fade);
 
         morning_edit_time.startAnimation(animation);
@@ -45,8 +52,8 @@ public class TimeChangeActivity extends AppCompatActivity {
                 MaterialTimePicker picker =
                         new MaterialTimePicker.Builder()
                                 .setTimeFormat(TimeFormat.CLOCK_24H)
-                                .setHour(12)
-                                .setMinute(10)
+                                .setHour(TIMEClassToHour(TIME.MORNING))
+                                .setMinute(TIMEClassToMinutes(TIME.MORNING))
                                 .build();
 
                 picker.show(getSupportFragmentManager(), "tag");
@@ -55,6 +62,8 @@ public class TimeChangeActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         morning_edit_time.setText(timeTextView(picker.getHour(),picker.getMinute()));
+                        String time_to_string=timeToString(picker.getHour(),picker.getMinute());
+                        setTime(time_to_string,0);
                     }
                 });
 
@@ -67,8 +76,8 @@ public class TimeChangeActivity extends AppCompatActivity {
                 MaterialTimePicker picker =
                         new MaterialTimePicker.Builder()
                                 .setTimeFormat(TimeFormat.CLOCK_24H)
-                                .setHour(12)
-                                .setMinute(10)
+                                .setHour(TIMEClassToHour(TIME.AFTERNOON))
+                                .setMinute(TIMEClassToMinutes(TIME.AFTERNOON))
                                 .build();
 
                 picker.show(getSupportFragmentManager(), "tag");
@@ -77,6 +86,8 @@ public class TimeChangeActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         lunch_edit_time.setText(timeTextView(picker.getHour(),picker.getMinute()));
+                        String time_to_string=timeToString(picker.getHour(),picker.getMinute());
+                        setTime(time_to_string,1);
                     }
                 });
 
@@ -89,8 +100,8 @@ public class TimeChangeActivity extends AppCompatActivity {
                 MaterialTimePicker picker =
                         new MaterialTimePicker.Builder()
                                 .setTimeFormat(TimeFormat.CLOCK_24H)
-                                .setHour(12)
-                                .setMinute(10)
+                                .setHour(TIMEClassToHour(TIME.NIGHT))
+                                .setMinute(TIMEClassToMinutes(TIME.NIGHT))
                                 .build();
 
                 picker.show(getSupportFragmentManager(), "tag");
@@ -99,6 +110,8 @@ public class TimeChangeActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         night_edit_time.setText(timeTextView(picker.getHour(),picker.getMinute()));
+                        String time_to_string=timeToString(picker.getHour(),picker.getMinute());
+                        setTime(time_to_string,2);
                     }
                 });
 
@@ -123,5 +136,60 @@ public class TimeChangeActivity extends AppCompatActivity {
 
         return result;
     }
+    public String timeToString(int hour,int minute){
+        String result="";
+        if(hour<10){
+            result="0"+Integer.toString(hour);
+        }
+        else{
+            result=Integer.toString(hour);
+        }
+        if(minute<10){
+            result+="0"+Integer.toString(minute);
+        }
+        else{
+            result+=Integer.toString(minute);
+        }
+
+        return result;
+    }
+
+
+    public String TIMEClassToTextView(String time){
+        return time.substring(0,2)+":"+time.substring(2,4);
+    }
+    public int TIMEClassToHour(String time){
+       return Integer.parseInt(time.substring(0, 2));
 
     }
+    public int TIMEClassToMinutes(String time){
+        return Integer.parseInt(time.substring(2, 4));
+    }
+
+
+    public void getTime(){
+        SharedPreferences sharedPref =getSharedPreferences("MySharedPref", MODE_PRIVATE);
+        TIME.MORNING=sharedPref.getString("MORNING","");
+         TIME.AFTERNOON=sharedPref.getString("AFTERNOON","");
+         TIME.NIGHT=sharedPref.getString("NIGHT","");
+    }
+
+
+    public void setTime(String time,int flag){
+        SharedPreferences sharedPref =getSharedPreferences("MySharedPref", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+
+        if(flag==0){
+        editor.putString("MORNING",time);
+        }
+        else if(flag==1){
+        editor.putString("AFTERNOON",time);
+        }
+        else if(flag==2){
+        editor.putString("NIGHT",time);
+        }
+        editor.apply();
+        getTime();
+    }
+
+}
