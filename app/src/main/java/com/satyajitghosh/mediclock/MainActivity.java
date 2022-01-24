@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       // AlarmManagerHandler.createNotificationChannel(this); // It creates the notification Channel
+        // AlarmManagerHandler.createNotificationChannel(this); // It creates the notification Channel
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -38,10 +38,10 @@ public class MainActivity extends AppCompatActivity {
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         if (account != null) {
             getTime(); // It refreshes the times from the shared preferences
-            startService(new Intent(this,AlarmRefreshService.class));
+            startService(new Intent(this, AlarmRefreshService.class));
             String personName = account.getDisplayName();
             startActivity(new Intent(MainActivity.this, DisplayMedicineActivity.class).putExtra("UserName", personName).putExtra("Id", account.getId())
-                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK)
+                            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK)
                     // This flags removes the backStack . It is used so that back press should not show the login screen .
             );
         }
@@ -94,11 +94,12 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
-    public void getTime(){
-        SharedPreferences sharedPref =getSharedPreferences("MySharedPref", MODE_PRIVATE);
-        TIME.MORNING=sharedPref.getString("MORNING","");
-        TIME.AFTERNOON=sharedPref.getString("AFTERNOON","");
-        TIME.NIGHT=sharedPref.getString("NIGHT","");
+
+    public void getTime() {
+        SharedPreferences sharedPref = getSharedPreferences("MySharedPref", MODE_PRIVATE);
+        TIME.MORNING = sharedPref.getString("MORNING", "");
+        TIME.AFTERNOON = sharedPref.getString("AFTERNOON", "");
+        TIME.NIGHT = sharedPref.getString("NIGHT", "");
     }
 
 }

@@ -73,18 +73,6 @@
         tools:layout_editor_absoluteX="254dp"
         tools:layout_editor_absoluteY="56dp" />
 
-    <ImageView
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_centerHorizontal="true"
-        android:visibility="invisible"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="116dp"
-        android:background="@drawable/ic_baseline_alarm_24"
-        tools:layout_editor_absoluteX="312dp"
-        tools:layout_editor_absoluteY="56dp" />
 
     <TextView
         android:id="@+id/note_view"

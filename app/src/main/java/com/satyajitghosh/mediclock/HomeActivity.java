@@ -19,8 +19,10 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * This Activity is used for adding new data to the FireBase Database.
+ *
  * @author SATYAJIT GHOSH
  * @since 1.0.0
  */
@@ -96,7 +98,7 @@ public class HomeActivity extends AppCompatActivity {
                             time
                     );
                     myRef.child("MedicineRecord").child(PersonID).child(mrh.getName() + AlarmManagerHandler.setUniqueNotificationId()).setValue(mrh); // It writes the new data to FireBase Database
-                  //  AlarmManagerHandler.initAlarm(mrh, getApplicationContext()); //It set up the alarm for that record
+                    //  AlarmManagerHandler.initAlarm(mrh, getApplicationContext()); //It set up the alarm for that record
                     Toast.makeText(getApplicationContext(), "Added Successfully", Toast.LENGTH_SHORT).show();
                 } else {
                     InputValidationHandler.showDialog(HomeActivity.this); // It shows a dialog box informing user to fill the required fields.

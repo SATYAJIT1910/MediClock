@@ -15,17 +15,19 @@ import java.util.ArrayList;
 public class InputValidationHandler {
     /**
      * It validates the user inputs
-     * @param context it provides the context
+     *
+     * @param context      it provides the context
      * @param medicineName it provides the name of the medicine
-     * @param time it provides the AlarmBundle
+     * @param time         it provides the AlarmBundle
      * @return it returns true if the input is fine otherwise false
      */
     public static boolean inputValidation(Context context, String medicineName, ArrayList<TIME.AlarmBundle> time) {
-        return !medicineName.isEmpty() && !time.isEmpty();
+        return !medicineName.isEmpty() && !time.isEmpty() && medicineName.length() <= 15;
     }
 
     /**
      * It is used to show the dialog box to the user , informing him that all the required fields are not filled.
+     *
      * @param context it provides the context
      */
     public static void showDialog(Context context) {
@@ -34,9 +36,9 @@ public class InputValidationHandler {
                 .Builder(context);
 
         // Set the message show for the Alert time
-        builder.setMessage("Required fields are empty.");
+        builder.setMessage("Required fields are empty or Medicine name is too large");
         // Set Alert Title
-        builder.setTitle("Alert !");
+        builder.setTitle("MediClock Alert !");
 
         builder
                 .setPositiveButton(

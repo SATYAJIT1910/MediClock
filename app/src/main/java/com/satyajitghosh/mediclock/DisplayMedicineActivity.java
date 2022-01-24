@@ -1,22 +1,18 @@
 package com.satyajitghosh.mediclock;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,13 +28,14 @@ import java.util.Objects;
  *
  * @author SATYAJIT GHOSH
  * @since 1.0.0
- * */
+ */
 public class DisplayMedicineActivity extends AppCompatActivity {
     private ListView listview;
     private DatabaseReference mDatabase;
     private ArrayList<MedicineRecordHandler> arrayList;
     protected GoogleSignInAccount account;
     private CustomAdapter c;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +48,7 @@ public class DisplayMedicineActivity extends AppCompatActivity {
         arrayList = new ArrayList<>();
         TextView account_user_name_view = findViewById(R.id.account_user_name_view);
         account_user_name_view.setText("Hi, " + account.getDisplayName()); //This is used to show the name of user on screen
-        account_user_name_view.startAnimation(AnimationUtils.loadAnimation(this,R.anim.fade));
+        account_user_name_view.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade));
 
         c = new CustomAdapter(getApplicationContext(), arrayList);
         listview.setAdapter(c);
@@ -61,12 +58,13 @@ public class DisplayMedicineActivity extends AppCompatActivity {
                 if (snapshot.exists()) {
                     findViewById(R.id.empty).setVisibility(View.INVISIBLE);
                     findViewById(R.id.emptyText).setVisibility(View.INVISIBLE);
-                      refreshData(snapshot);
-                }else{
+                    refreshData(snapshot);
+                } else {
                     findViewById(R.id.empty).setVisibility(View.VISIBLE);
                     findViewById(R.id.emptyText).setVisibility(View.VISIBLE);
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(getApplicationContext(), "Check you internet connection", Toast.LENGTH_SHORT).show();
@@ -83,13 +81,14 @@ public class DisplayMedicineActivity extends AppCompatActivity {
         findViewById(R.id.setting_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(),TimeChangeActivity.class));
+                startActivity(new Intent(getApplicationContext(), TimeChangeActivity.class));
             }
         });
     }
 
     /**
      * This method is used to update the arraylist on CustomAdapter and refreshes the listview
+     *
      * @param snapshot it gives the snapshot of the database
      */
     public void refreshData(DataSnapshot snapshot) {

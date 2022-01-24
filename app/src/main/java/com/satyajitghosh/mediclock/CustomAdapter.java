@@ -76,7 +76,7 @@ public class CustomAdapter extends ArrayAdapter<MedicineRecordHandler> {
             } else if (j.contains(TIME.NIGHT)) {
                 output_time += "Night";
             } else {
-                output_time += "ERROR";
+                output_time += j.substring(0, 2) + ":" + j.substring(2, 4);
             }
         }
         time_view.setText(output_time);

@@ -4,9 +4,10 @@ import java.util.ArrayList;
 
 /**
  * This class is used to handle all the Records for each entry.
+ *
  * @author SATYAJIT GHOSH
  * @since 1.0.0
- * */
+ */
 public class MedicineRecordHandler {
     public String key;
     String name;

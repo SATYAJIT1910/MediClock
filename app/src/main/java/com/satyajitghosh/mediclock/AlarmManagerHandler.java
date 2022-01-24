@@ -1,7 +1,6 @@
 package com.satyajitghosh.mediclock;
 
 import android.app.AlarmManager;
-import android.app.Dialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -39,16 +38,12 @@ public class AlarmManagerHandler extends AppCompatActivity {
     public static void addAlert(Context context, int hour, int minute, String medicineName, int notificationId, String Food) {
 
 
-
-
-
-
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.HOUR_OF_DAY, hour);
         cal.set(Calendar.MINUTE, minute);
         cal.set(Calendar.SECOND, 0);
 
-         //if alarm time has already passed, increment day by 1
+        //if alarm time has already passed, increment day by 1
         if (cal.getTimeInMillis() <= System.currentTimeMillis()) {
             cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH) + 1);
         }
@@ -63,14 +58,14 @@ public class AlarmManagerHandler extends AppCompatActivity {
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, notificationId, intent, 0);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-       try{
+        try {
 
-         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, AlarmManager.INTERVAL_DAY, pendingIntent);
-          // alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, 70000, pendingIntent); //TODO: REMOVE THE COMMENT FOR TESTING
-       }catch (Exception e){
-           Log.d("AlarmManagerError",e.toString());
-           Toast.makeText(context.getApplicationContext(), "We cannot setup reminder on your Device", Toast.LENGTH_LONG).show();
-       }
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, AlarmManager.INTERVAL_DAY, pendingIntent);
+            // alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, 70000, pendingIntent); //TODO: REMOVE THE COMMENT FOR TESTING
+        } catch (Exception e) {
+            Log.d("AlarmManagerError", e.toString());
+            Toast.makeText(context.getApplicationContext(), "We cannot setup reminder on your Device", Toast.LENGTH_LONG).show();
+        }
     }
 
     /**
@@ -132,8 +127,8 @@ public class AlarmManagerHandler extends AppCompatActivity {
                 Food = "after food";
             }
 
-          AlarmManagerHandler.addAlert(context, hour, minutes, mrh.getName(), i.getNotificationID(), Food);
-         //   AlarmManagerHandler.addAlert(context, 15,6 , mrh.getName(), i.getNotificationID(), Food); //TODO: REMOVE THE COMMENT FOR TESTING
+            AlarmManagerHandler.addAlert(context, hour, minutes, mrh.getName(), i.getNotificationID(), Food);
+            //   AlarmManagerHandler.addAlert(context, 15,6 , mrh.getName(), i.getNotificationID(), Food); //TODO: REMOVE THE COMMENT FOR TESTING
         }
     }
 

@@ -4,7 +4,6 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,7 +16,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.Iterator;
 import java.util.Objects;
 
 public class AlarmRefreshService extends Service {
@@ -26,7 +24,7 @@ public class AlarmRefreshService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d("RefreshService","It is refreshed");
+        Log.d("RefreshService", "It is refreshed");
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference().child("MedicineRecord").child(Objects.requireNonNull(account.getId()));
@@ -70,12 +68,13 @@ public class AlarmRefreshService extends Service {
     public IBinder onBind(Intent intent) {
         return null;
     }
+
     public void refreshData(DataSnapshot snapshot) {
 
-         MedicineRecordHandler mrd = snapshot.getValue(MedicineRecordHandler.class);
-           AlarmManagerHandler.initAlarm(mrd,getApplicationContext());
-           Log.d("RefreshService",mrd.getName()+" refreshed");
-        }
-
-
+        MedicineRecordHandler mrd = snapshot.getValue(MedicineRecordHandler.class);
+        AlarmManagerHandler.initAlarm(mrd, getApplicationContext());
+        Log.d("RefreshService", mrd.getName() + " refreshed");
     }
+
+
+}
