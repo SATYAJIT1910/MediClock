@@ -13,6 +13,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.android.material.timepicker.MaterialTimePicker;
+import com.google.android.material.timepicker.TimeFormat;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -32,10 +34,12 @@ public class UpdateActivity extends AppCompatActivity {
     private Button updateBtn;
     private RadioGroup radioGroup;
     private MaterialButtonToggleGroup materialButtonToggleGroup;
+    private MaterialButtonToggleGroup materialButtonToggleGroup1;
     private boolean before_food;
     private GoogleSignInClient mGoogleSignInClient;
     private Button cancelBtn;
-
+    private Button up_custom_time;
+    private String custom_time_value="0000";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,8 +54,10 @@ public class UpdateActivity extends AppCompatActivity {
         note = findViewById(R.id.up_note);
         radioGroup = findViewById(R.id.up_radioGroup);
         materialButtonToggleGroup = findViewById(R.id.up_toggleButton);
+        materialButtonToggleGroup1=findViewById(R.id.up_toggleButton1);
         updateBtn = findViewById(R.id.up_updatebtn);
         cancelBtn = findViewById(R.id.up_cancel);
+        up_custom_time=findViewById(R.id.up_custom_time);
         Intent intent = getIntent();
         String key = intent.getStringExtra("key");
         prefillData(intent);
@@ -78,6 +84,41 @@ public class UpdateActivity extends AppCompatActivity {
 
             }
         });
+
+        up_custom_time.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MaterialTimePicker picker;
+                if(up_custom_time.getText().toString().contains("Custom")){
+
+                    picker =
+                            new MaterialTimePicker.Builder()
+                                    .setTimeFormat(TimeFormat.CLOCK_24H)
+                                    .setHour(0)
+                                    .setMinute(0)
+                                    .build();
+                }else{
+                    picker =
+                            new MaterialTimePicker.Builder()
+                                    .setTimeFormat(TimeFormat.CLOCK_24H)
+                                    .setHour(Integer.parseInt(up_custom_time.getText().toString().substring(0,2)))
+                                    .setMinute(Integer.parseInt(up_custom_time.getText().toString().substring(3,5)))
+                                    .build();
+                }
+
+                picker.show(getSupportFragmentManager(), "tag");
+
+                picker.addOnPositiveButtonClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        up_custom_time.setText(TimeChangeActivity.timeTextView(picker.getHour(),picker.getMinute()));
+                        custom_time_value=TimeChangeActivity.timeToString(picker.getHour(),picker.getMinute());
+                    }
+                });
+            }
+        });
+
+
         //This code is for Cancel Button
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,6 +171,8 @@ public class UpdateActivity extends AppCompatActivity {
         }
 
         List<Integer> arr = materialButtonToggleGroup.getCheckedButtonIds();
+        arr.addAll(materialButtonToggleGroup1.getCheckedButtonIds());
+
         ArrayList<TIME.AlarmBundle> time = new ArrayList<>();
         for (Integer i : arr) {
             if (i == R.id.up_morning) {
@@ -138,7 +181,10 @@ public class UpdateActivity extends AppCompatActivity {
                 time.add(new TIME.AlarmBundle(TIME.AFTERNOON, AlarmManagerHandler.setUniqueNotificationId()));
             } else if (i == R.id.up_night) {
                 time.add(new TIME.AlarmBundle(TIME.NIGHT, AlarmManagerHandler.setUniqueNotificationId()));
+            } else if(i==R.id.up_custom_time){
+                time.add(new TIME.AlarmBundle(custom_time_value, AlarmManagerHandler.setUniqueNotificationId()));
             }
+
         }
 
 
