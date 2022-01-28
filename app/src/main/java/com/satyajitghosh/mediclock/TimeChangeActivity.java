@@ -123,7 +123,7 @@ public class TimeChangeActivity extends AppCompatActivity {
      * @param minute it takes the minute information in Integer like 3 or 29
      * @return it returns a string made like "08:00" or "10:30"
      */
-    public String timeTextView(int hour, int minute) {
+    public static String timeTextView(int hour, int minute) {
         String result = "";
         if (hour < 10) {
             result = "0" + hour;
@@ -146,7 +146,7 @@ public class TimeChangeActivity extends AppCompatActivity {
      * @param minute it takes the minute information in Integer like 3 or 29
      * @return it returns a string made like "0800" or "1030"
      */
-    public String timeToString(int hour, int minute) {
+    public static String timeToString(int hour, int minute) {
         String result = "";
         if (hour < 10) {
             result = "0" + hour;

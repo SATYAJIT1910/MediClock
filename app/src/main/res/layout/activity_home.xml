@@ -64,7 +64,7 @@
 
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:id="@+id/toggleButton"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -76,6 +76,7 @@
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:width="150dp"
             android:text="Morning" />
 
         <Button
@@ -83,15 +84,43 @@
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:width="150dp"
             android:text="afternoon" />
+
+
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/toggleButton1"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup">
+
 
         <Button
             android:id="@+id/night"
             style="?attr/materialButtonOutlinedStyle"
+            android:width="150dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Night" />
+
+
+        <Button
+            android:id="@+id/custom_time"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:width="150dp"
+            android:text="Custom" />
+
     </com.google.android.material.button.MaterialButtonToggleGroup>
+
+
+
 
     <Button
         android:id="@+id/submitbtn"

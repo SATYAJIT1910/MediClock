@@ -1,5 +1,6 @@
 package com.satyajitghosh.mediclock;
 
+import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -34,7 +35,9 @@ public class MyAlarmService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         String MedicineName = intent.getStringExtra("MedicineName");
         String Food = intent.getStringExtra("Food");
-
+        long time = intent.getLongExtra("time", 0);
+        int notificationId=intent.getIntExtra("notificationId",0);
+        AlarmManagerHandler.addAlert(getApplicationContext(),time,MedicineName,Food,notificationId); // It initiates the next alarm.
         long[] pattern = {0, 100, 500};
         vibrator.vibrate(pattern, 0);
 

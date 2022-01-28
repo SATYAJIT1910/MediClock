@@ -37,11 +37,11 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity> <!-- For AlarmService -->
-        <receiver android:name=".MyBroadcastReceiver" /> <!-- For AlarmService -->
+        <receiver android:name=".MyBroadcastReceiver" />
         <service
             android:name=".MyAlarmService"
             android:enabled="true"

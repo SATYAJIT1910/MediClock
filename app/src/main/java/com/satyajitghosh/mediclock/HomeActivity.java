@@ -14,6 +14,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.android.material.timepicker.MaterialTimePicker;
+import com.google.android.material.timepicker.TimeFormat;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -35,20 +37,26 @@ public class HomeActivity extends AppCompatActivity {
     private Button submitBtn;
     private RadioGroup radioGroup;
     private MaterialButtonToggleGroup materialButtonToggleGroup;
+    private MaterialButtonToggleGroup materialButtonToggleGroup1;
     private boolean before_food;
     private Button show;
-
+    private Button custom_time;
+    private String custom_time_value="0000";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        startService(new Intent(this, AlarmRefreshService.class));
+
         name = findViewById(R.id.name);
         note = findViewById(R.id.note);
         submitBtn = findViewById(R.id.submitbtn);
         materialButtonToggleGroup = findViewById(R.id.toggleButton);
+        materialButtonToggleGroup1=findViewById(R.id.toggleButton1);
         radioGroup = findViewById(R.id.radioGroup);
         show = findViewById(R.id.show);
+        custom_time=findViewById(R.id.custom_time);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
@@ -64,6 +72,40 @@ public class HomeActivity extends AppCompatActivity {
         String nameUser = intent.getStringExtra("UserName");
         String PersonID = intent.getStringExtra("Id");
 
+        custom_time.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MaterialTimePicker picker;
+                if(custom_time.getText().toString().contains("Custom")){
+
+                        picker =
+                        new MaterialTimePicker.Builder()
+                                .setTimeFormat(TimeFormat.CLOCK_24H)
+                                .setHour(0)
+                                .setMinute(0)
+                                .build();
+                }else{
+                    picker =
+                            new MaterialTimePicker.Builder()
+                                    .setTimeFormat(TimeFormat.CLOCK_24H)
+                                    .setHour(Integer.parseInt(custom_time.getText().toString().substring(0,2)))
+                                    .setMinute(Integer.parseInt(custom_time.getText().toString().substring(3,5)))
+                                    .build();
+                }
+
+                picker.show(getSupportFragmentManager(), "tag");
+
+                picker.addOnPositiveButtonClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        custom_time.setText(TimeChangeActivity.timeTextView(picker.getHour(),picker.getMinute()));
+                        custom_time_value=TimeChangeActivity.timeToString(picker.getHour(),picker.getMinute());
+                    }
+                });
+            }
+        });
+
+
 
         show.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,6 +119,8 @@ public class HomeActivity extends AppCompatActivity {
 
                 before_food = R.id.radio_button_1 == radioGroup.getCheckedRadioButtonId();
                 List<Integer> arr = materialButtonToggleGroup.getCheckedButtonIds();
+                arr.addAll(materialButtonToggleGroup1.getCheckedButtonIds());
+
                 ArrayList<TIME.AlarmBundle> time = new ArrayList<>();
                 for (Integer i : arr) {
                     if (i == R.id.morning) {
@@ -85,6 +129,8 @@ public class HomeActivity extends AppCompatActivity {
                         time.add(new TIME.AlarmBundle(TIME.AFTERNOON, AlarmManagerHandler.setUniqueNotificationId()));
                     } else if (i == R.id.night) {
                         time.add(new TIME.AlarmBundle(TIME.NIGHT, AlarmManagerHandler.setUniqueNotificationId()));
+                    } else if(i==R.id.custom_time){
+                        time.add(new TIME.AlarmBundle(custom_time_value, AlarmManagerHandler.setUniqueNotificationId()));
                     }
                 }
 
@@ -106,6 +152,7 @@ public class HomeActivity extends AppCompatActivity {
         });
 
     }
+
 
 
 }
