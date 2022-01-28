@@ -15,25 +15,17 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
 
         String MedicineName = intent.getStringExtra("MedicineName");
         String Food = intent.getStringExtra("Food");
-
-        try {
+        long time=intent.getLongExtra("time",0);
+        int notificationId=intent.getIntExtra("notificationId",0);
 
             context.startService(new Intent(context, MyAlarmService.class)
                     .putExtra("MedicineName", MedicineName)
                     .putExtra("Food", Food)
+                    .putExtra("time",time)
+                    .putExtra("notificationId",notificationId)
                     .addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES)
 
             );
-        } catch (Exception e) {
-            Log.d("ServiceStartError", e.getMessage());
-            context.startForegroundService(new Intent(context, MyAlarmService.class)
-                    .putExtra("MedicineName", MedicineName)
-                    .putExtra("Food", Food)
-                    .addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES)
-
-            );
-
-        }
 
     }
 

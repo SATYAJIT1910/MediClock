@@ -53,19 +53,46 @@ public class AlarmManagerHandler extends AppCompatActivity {
         Intent intent = new Intent(context, MyBroadcastReceiver.class)
                 .putExtra("MedicineName", medicineName)
                 .putExtra("Food", Food)
+                .putExtra("time",time)
+                .putExtra("notificationId",notificationId)
                 .addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
 
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, notificationId, intent, 0);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
         try {
-
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, AlarmManager.INTERVAL_DAY, pendingIntent);
-            // alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, 70000, pendingIntent); //TODO: REMOVE THE COMMENT FOR TESTING
+            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,time,pendingIntent);
+           Log.d("Alarm","alarm Added for "+Long.toString(time));
         } catch (Exception e) {
             Log.d("AlarmManagerError", e.toString());
             Toast.makeText(context.getApplicationContext(), "We cannot setup reminder on your Device", Toast.LENGTH_LONG).show();
         }
+    }
+
+    /**
+     * This method is used for setting the repeated alarms
+     * @param context It provides the context
+     * @param time It provides the time in milliseconds of last fired alarm
+     * @param medicineName  It provides the medicine name
+     * @param Food It provides the food name
+     * @param notificationId It provides the notification id
+     */
+    public static void addAlert(Context context,long time,String medicineName,String Food,int notificationId){
+        Calendar cal=Calendar.getInstance();
+        cal.getTimeInMillis();
+        Intent intent = new Intent(context, MyBroadcastReceiver.class)
+                .putExtra("MedicineName", medicineName)
+                .putExtra("Food", Food)
+                .putExtra("time",time)
+                .addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context,notificationId, intent, 0);
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,cal.getTimeInMillis()+AlarmManager.INTERVAL_DAY,pendingIntent);
+
+        Log.d("Alarm","Repeated Alarm Added with notification id "+Integer.toString(notificationId));
+
+
     }
 
     /**
@@ -128,7 +155,6 @@ public class AlarmManagerHandler extends AppCompatActivity {
             }
 
             AlarmManagerHandler.addAlert(context, hour, minutes, mrh.getName(), i.getNotificationID(), Food);
-            //   AlarmManagerHandler.addAlert(context, 15,6 , mrh.getName(), i.getNotificationID(), Food); //TODO: REMOVE THE COMMENT FOR TESTING
         }
     }
 
@@ -139,8 +165,7 @@ public class AlarmManagerHandler extends AppCompatActivity {
      * @return a random generated number
      */
     public static int setUniqueNotificationId() {
-        int result = ((int) ((Math.random() * (99999 - 11111)) + 11111)) + ((int) ((Math.random() * (9999 - 1111)) + 1111));
-        return result;
+        return ((int) ((Math.random() * (99999 - 11111)) + 11111)) + ((int) ((Math.random() * (9999 - 1111)) + 1111));
     }
 
 
