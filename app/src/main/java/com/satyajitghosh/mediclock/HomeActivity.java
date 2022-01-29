@@ -56,7 +56,7 @@ public class HomeActivity extends AppCompatActivity {
         materialButtonToggleGroup = findViewById(R.id.toggleButton);
         materialButtonToggleGroup1 = findViewById(R.id.toggleButton1);
         radioGroup = findViewById(R.id.radioGroup);
-        show = findViewById(R.id.show);
+        show = findViewById(R.id.cancel_btn);
         custom_time = findViewById(R.id.custom_time);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -145,6 +145,7 @@ public class HomeActivity extends AppCompatActivity {
                     );
                     myRef.child("MedicineRecord").child(PersonID).child(mrh.getName() + AlarmManagerHandler.setUniqueNotificationId()).setValue(mrh); // It writes the new data to FireBase Database
                     Toast.makeText(getApplicationContext(), "Added Successfully", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(HomeActivity.this, DisplayMedicineActivity.class));
                 } else {
                     InputValidationHandler.showDialog(HomeActivity.this); // It shows a dialog box informing user to fill the required fields.
                 }
