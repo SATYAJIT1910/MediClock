@@ -21,6 +21,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.satyajitghosh.mediclock.doctor.DoctorActivity;
+import com.satyajitghosh.mediclock.lab.labActivity;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -91,8 +93,10 @@ public class DisplayMedicineActivity extends AppCompatActivity {
                         startActivity(new Intent(getApplicationContext(), TimeChangeActivity.class));
                         break;
                     case R.id.nav_doctor:
+                        startActivity(new Intent(getApplicationContext(), DoctorActivity.class));
                         break;
                     case R.id.nav_lab:
+                        startActivity(new Intent(getApplicationContext(), labActivity.class));
                         break;
                     default:
                         return false;

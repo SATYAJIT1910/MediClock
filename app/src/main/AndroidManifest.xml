@@ -9,7 +9,8 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" /> <!-- For apps with targetSDK=31 (Android 12) -->
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT"/>
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/mediclock_icon"
@@ -17,6 +18,12 @@
         android:roundIcon="@drawable/mediclock_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.MediClock">
+        <activity
+            android:name=".lab.labActivity"
+            android:exported="false" />
+        <activity
+            android:name=".doctor.DoctorActivity"
+            android:exported="false" />
         <activity
             android:name=".RingActivity"
             android:exported="false" />
@@ -38,10 +45,12 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity> <!-- For AlarmService -->
         <receiver android:name=".MyBroadcastReceiver" />
+
         <service
             android:name=".MyAlarmService"
             android:enabled="true"
