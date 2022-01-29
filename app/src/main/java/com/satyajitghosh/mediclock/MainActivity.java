@@ -94,7 +94,8 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
-    public void initSharedPref(){
+
+    public void initSharedPref() {
         SharedPreferences sharedPref = getSharedPreferences("MySharedPref", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("MORNING", TIME.MORNING);
@@ -105,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void getTime() {
         SharedPreferences sharedPref = getSharedPreferences("MySharedPref", MODE_PRIVATE);
-        if( sharedPref.getString("MORNING", "").length()==0){ // This satisfy no SharedPreferences exist
+        if (sharedPref.getString("MORNING", "").length() == 0) { // This satisfy no SharedPreferences exist
             initSharedPref();
         }
         TIME.MORNING = sharedPref.getString("MORNING", "");

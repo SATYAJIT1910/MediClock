@@ -103,7 +103,6 @@ public class DisplayMedicineActivity extends AppCompatActivity {
     }
 
 
-
     /**
      * This method is used to update the arraylist on CustomAdapter and refreshes the listview
      *

@@ -22,6 +22,7 @@ public class MedicineRecordHandler {
         this.reminder = reminder;
 
     }
+
     //Empty constructor is required here for FireBase
     public MedicineRecordHandler() {
     }

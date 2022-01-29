@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * This activity is used when the user receives alarms with a full screen intent. It has a dismiss button that helps user to dismiss the alarm
+ *
  * @author SATYAJIT GHOSH
  * @since 1.6.0
  */
