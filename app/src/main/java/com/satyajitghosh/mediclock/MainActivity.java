@@ -1,4 +1,4 @@
-package com.satyajitghosh.mediclock.medicine;
+package com.satyajitghosh.mediclock;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,7 +15,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
-import com.satyajitghosh.mediclock.R;
+import com.satyajitghosh.mediclock.medicine.DisplayMedicineActivity;
+import com.satyajitghosh.mediclock.medicine.HomeActivity;
+import com.satyajitghosh.mediclock.medicine.TIME;
 
 public class MainActivity extends AppCompatActivity {
 
