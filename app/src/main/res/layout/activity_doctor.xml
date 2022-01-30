@@ -6,4 +6,5 @@
     android:layout_height="match_parent"
     tools:context=".doctor.DoctorActivity">
 
+        tools:ignore="TextContrastCheck" />
 </androidx.constraintlayout.widget.ConstraintLayout>
