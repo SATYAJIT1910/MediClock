@@ -7,7 +7,7 @@ public class DoctorDataModel {
     int month;
     int year;
     int notificationId;
-    int key;
+    String key;
 
     public DoctorDataModel(String name, String reason, int date, int month, int year,int notificationId) {
         this.name = name;

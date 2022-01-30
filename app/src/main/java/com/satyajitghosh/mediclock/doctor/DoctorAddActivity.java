@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -61,6 +62,7 @@ public class DoctorAddActivity extends AppCompatActivity {
                 DoctorDataModel obj = new DoctorDataModel(name, reason, arr[0], arr[1], arr[2], AlarmManagerHandler.setUniqueNotificationId());
                 mDatabase.child(obj.getName() + AlarmManagerHandler.setUniqueNotificationId()).setValue(obj);
                 Toast.makeText(getApplicationContext(), "Added", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(DoctorAddActivity.this,DoctorActivity.class));
                 }else{
                     InputValidationHandler.showDialog(DoctorAddActivity.this);
                 }

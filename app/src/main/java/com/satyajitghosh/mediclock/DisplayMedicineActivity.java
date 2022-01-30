@@ -94,7 +94,7 @@ public class DisplayMedicineActivity extends AppCompatActivity {
                         startActivity(new Intent(getApplicationContext(), TimeChangeActivity.class));
                         break;
                     case R.id.nav_doctor:
-                        startActivity(new Intent(getApplicationContext(), DoctorAddActivity.class));
+                        startActivity(new Intent(getApplicationContext(), DoctorActivity.class));
                         break;
                     case R.id.nav_lab:
                         startActivity(new Intent(getApplicationContext(), labActivity.class));
