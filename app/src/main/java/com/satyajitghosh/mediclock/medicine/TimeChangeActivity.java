@@ -1,4 +1,4 @@
-package com.satyajitghosh.mediclock;
+package com.satyajitghosh.mediclock.medicine;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
+import com.satyajitghosh.mediclock.R;
 
 /**
  * This activity is used for changing the default times

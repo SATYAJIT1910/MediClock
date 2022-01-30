@@ -1,10 +1,7 @@
 package com.satyajitghosh.mediclock.doctor;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -22,8 +19,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.satyajitghosh.mediclock.AlarmManagerHandler;
-import com.satyajitghosh.mediclock.InputValidationHandler;
+import com.satyajitghosh.mediclock.medicine.AlarmManagerHandler;
+import com.satyajitghosh.mediclock.medicine.InputValidationHandler;
 import com.satyajitghosh.mediclock.R;
 
 import java.util.Calendar;

@@ -1,4 +1,4 @@
-package com.satyajitghosh.mediclock;
+package com.satyajitghosh.mediclock.medicine;
 
 import android.app.AlarmManager;
 import android.app.NotificationChannel;

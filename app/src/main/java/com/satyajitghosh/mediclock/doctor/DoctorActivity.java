@@ -21,7 +21,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.satyajitghosh.mediclock.DisplayMedicineActivity;
+import com.satyajitghosh.mediclock.medicine.DisplayMedicineActivity;
 import com.satyajitghosh.mediclock.R;
 import com.satyajitghosh.mediclock.lab.labActivity;
 

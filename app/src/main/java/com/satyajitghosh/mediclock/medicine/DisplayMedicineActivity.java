@@ -1,4 +1,4 @@
-package com.satyajitghosh.mediclock;
+package com.satyajitghosh.mediclock.medicine;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,8 +21,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.satyajitghosh.mediclock.R;
 import com.satyajitghosh.mediclock.doctor.DoctorActivity;
-import com.satyajitghosh.mediclock.doctor.DoctorAddActivity;
 import com.satyajitghosh.mediclock.lab.labActivity;
 
 import java.util.ArrayList;

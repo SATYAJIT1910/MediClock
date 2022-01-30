@@ -1,6 +1,6 @@
-package com.satyajitghosh.mediclock;
+package com.satyajitghosh.mediclock.medicine;
 
-import static com.satyajitghosh.mediclock.AlarmManagerHandler.CHANNEL_ID;
+import static com.satyajitghosh.mediclock.medicine.AlarmManagerHandler.CHANNEL_ID;
 
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -13,6 +13,8 @@ import android.os.Vibrator;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
+
+import com.satyajitghosh.mediclock.R;
 
 /**
  * This service is started by the broadcastReceiver. It it is used for showing the notifications and alarms .

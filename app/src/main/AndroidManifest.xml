@@ -28,22 +28,22 @@
             android:name=".doctor.DoctorActivity"
             android:exported="false" />
         <activity
-            android:name=".RingActivity"
+            android:name=".medicine.RingActivity"
             android:exported="false" />
         <activity
-            android:name=".TimeChangeActivity"
+            android:name=".medicine.TimeChangeActivity"
             android:exported="false" />
         <activity
-            android:name=".UpdateActivity"
+            android:name=".medicine.UpdateActivity"
             android:exported="false" />
         <activity
-            android:name=".DisplayMedicineActivity"
+            android:name=".medicine.DisplayMedicineActivity"
             android:exported="false" />
         <activity
-            android:name=".HomeActivity"
+            android:name=".medicine.HomeActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".medicine.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -52,14 +52,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity> <!-- For AlarmService -->
-        <receiver android:name=".MyBroadcastReceiver" />
+        <receiver android:name=".medicine.MyBroadcastReceiver" />
 
         <service
-            android:name=".MyAlarmService"
+            android:name=".medicine.MyAlarmService"
             android:enabled="true"
             android:exported="true" />
         <service
-            android:name=".AlarmRefreshService"
+            android:name=".medicine.AlarmRefreshService"
             android:enabled="true"
             android:exported="true" />
 
