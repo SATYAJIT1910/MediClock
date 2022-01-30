@@ -2,6 +2,7 @@ package com.satyajitghosh.mediclock.doctor;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.ListView;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -19,7 +21,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.satyajitghosh.mediclock.DisplayMedicineActivity;
 import com.satyajitghosh.mediclock.R;
+import com.satyajitghosh.mediclock.lab.labActivity;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -74,12 +78,12 @@ public class DoctorActivity extends AppCompatActivity {
                 assert doctorDataModel != null;
                 doctorDataModel.key = snapshot.getKey();
 
-                for(int i=0;i<arrayList.size();i++){
-                    if(doctorDataModel.key.equals(arrayList.get(i).key)){
+                for (int i = 0; i < arrayList.size(); i++) {
+                    if (doctorDataModel.key.equals(arrayList.get(i).key)) {
                         arrayList.remove(i);
                     }
                 }
-              //  arrayList.remove(doctorDataModel);
+                //  arrayList.remove(doctorDataModel);
 
                 c.notifyDataSetChanged();
                 emptyImage();
@@ -101,9 +105,27 @@ public class DoctorActivity extends AppCompatActivity {
         findViewById(R.id.doctor_add_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(DoctorActivity.this,DoctorAddActivity.class));
+                startActivity(new Intent(DoctorActivity.this, DoctorAddActivity.class));
             }
         });
+
+        bottomAppBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.nav_medicine:
+                        startActivity(new Intent(DoctorActivity.this, DisplayMedicineActivity.class));
+                        break;
+                    case R.id.nav_lab:
+                        startActivity(new Intent(DoctorActivity.this, labActivity.class));
+                        break;
+                    default:
+                        return false;
+                }
+                return true;
+            }
+        });
+
 
     }
 
