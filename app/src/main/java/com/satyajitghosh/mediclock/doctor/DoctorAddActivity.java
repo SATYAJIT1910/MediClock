@@ -40,7 +40,7 @@ public class DoctorAddActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_add);
-        date_view = findViewById(R.id.date_view);
+        date_view = findViewById(R.id.lab_date_view);
         doctor_name = findViewById(R.id.doctor_name);
         doctor_reason = findViewById(R.id.doctor_reason);
         doctor_add_btn = findViewById(R.id.doctor_add_btn);

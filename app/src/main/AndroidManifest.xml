@@ -19,6 +19,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MediClock">
         <activity
+            android:name=".lab.labAddActivity"
+            android:exported="false" />
+        <activity
             android:name=".doctor.DoctorAddActivity"
             android:exported="false" />
         <activity
