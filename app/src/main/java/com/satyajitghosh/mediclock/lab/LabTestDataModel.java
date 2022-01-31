@@ -7,7 +7,7 @@ public class LabTestDataModel {
     String testName;
     String doctorName;
     int notificationId;
-
+    String key;
     public LabTestDataModel(int day, int month, int year, String testName, String doctorName,int notificationId) {
         this.day = day;
         this.month = month;

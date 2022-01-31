@@ -2,6 +2,7 @@ package com.satyajitghosh.mediclock.lab;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -68,6 +69,7 @@ public class labAddActivity extends AppCompatActivity {
                     LabTestDataModel obj = new LabTestDataModel(arr[0], arr[1], arr[2], testName, docName, AlarmManagerHandler.setUniqueNotificationId());
                     mDatabase.child(obj.getTestName() + AlarmManagerHandler.setUniqueNotificationId()).setValue(obj);
                     Toast.makeText(getApplicationContext(), "Added", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(labAddActivity.this,labActivity.class));
                 } else {
                     InputValidationHandler.showDialog(labAddActivity.this);
                 }
@@ -77,7 +79,7 @@ public class labAddActivity extends AppCompatActivity {
     }
 
     public boolean inputValidation(String testName, String docName) {
-        return !testName.isEmpty() && !docName.isEmpty() && arr[0] != 0 && testName.length() < 15 && docName.length() < 40;
+        return !testName.isEmpty() && !docName.isEmpty() && arr[0] != 0 && testName.length() < 25 && docName.length() < 40;
     }
 
     public void showDatePickerDialog(View v) {
