@@ -19,16 +19,16 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.satyajitghosh.mediclock.R;
 import com.satyajitghosh.mediclock.medicine.AlarmManagerHandler;
 import com.satyajitghosh.mediclock.medicine.InputValidationHandler;
-import com.satyajitghosh.mediclock.R;
 
 import java.util.Calendar;
 import java.util.Objects;
 
 public class DoctorAddActivity extends AppCompatActivity {
-    public static TextView date_view;
     private static final int[] arr = new int[3];
+    public static TextView date_view;
     private String name;
     private String reason;
     private TextInputLayout doctor_name;
@@ -55,12 +55,12 @@ public class DoctorAddActivity extends AppCompatActivity {
                 name = doctor_name.getEditText().getText().toString();
                 reason = doctor_reason.getEditText().getText().toString();
 
-                if(inputValidation(name,reason)){
-                DoctorDataModel obj = new DoctorDataModel(name, reason, arr[0], arr[1], arr[2], AlarmManagerHandler.setUniqueNotificationId());
-                mDatabase.child(obj.getName() + AlarmManagerHandler.setUniqueNotificationId()).setValue(obj);
-                Toast.makeText(getApplicationContext(), "Added", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(DoctorAddActivity.this,DoctorActivity.class));
-                }else{
+                if (inputValidation(name, reason)) {
+                    DoctorDataModel obj = new DoctorDataModel(name, reason, arr[0], arr[1], arr[2], AlarmManagerHandler.setUniqueNotificationId());
+                    mDatabase.child(obj.getName() + AlarmManagerHandler.setUniqueNotificationId()).setValue(obj);
+                    Toast.makeText(getApplicationContext(), "Added", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(DoctorAddActivity.this, DoctorActivity.class));
+                } else {
                     InputValidationHandler.showDialog(DoctorAddActivity.this);
                 }
             }
@@ -68,8 +68,16 @@ public class DoctorAddActivity extends AppCompatActivity {
 
 
     }
-    public boolean inputValidation(String name,String reason){
-        return !name.isEmpty() && !reason.isEmpty() && arr[0] != 0 && name.length()<15 && reason.length()<40;
+
+    public boolean inputValidation(String name, String reason) {
+        if (name.contains(".") || name.contains("[") || name.contains("]") || name.contains("$") || name.contains("#")) {
+            return false;
+        }
+        if (reason.contains(".") || reason.contains("[") || reason.contains("]") || reason.contains("$") || reason.contains("#")) {
+            return false;
+        }
+
+        return !name.isEmpty() && !reason.isEmpty() && arr[0] != 0 && name.length() < 15 && reason.length() < 40;
     }
 
     public void showDatePickerDialog(View v) {
@@ -87,7 +95,7 @@ public class DoctorAddActivity extends AppCompatActivity {
             final Calendar c = Calendar.getInstance();
             int year = c.get(Calendar.YEAR);
             int month = c.get(Calendar.MONTH);
-            c.set(Calendar.DAY_OF_MONTH,c.get(Calendar.DAY_OF_MONTH)+1);
+            c.set(Calendar.DAY_OF_MONTH, c.get(Calendar.DAY_OF_MONTH) + 1);
             int day = c.get(Calendar.DAY_OF_MONTH);
             DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), this, year, month, day);
             datePickerDialog.getDatePicker().setMinDate(c.getTimeInMillis());

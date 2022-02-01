@@ -79,6 +79,13 @@ public class labAddActivity extends AppCompatActivity {
     }
 
     public boolean inputValidation(String testName, String docName) {
+        if (testName.contains(".") || testName.contains("[") || testName.contains("]") || testName.contains("$") || testName.contains("#")) {
+            return false;
+        }
+        if (docName.contains(".") || docName.contains("[") || docName.contains("]") || docName.contains("$") || docName.contains("#")) {
+            return false;
+        }
+
         return !testName.isEmpty() && !docName.isEmpty() && arr[0] != 0 && testName.length() < 25 && docName.length() < 40;
     }
 

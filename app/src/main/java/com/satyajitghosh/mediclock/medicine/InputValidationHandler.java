@@ -35,7 +35,7 @@ public class InputValidationHandler {
                 .Builder(context);
 
         // Set the message show for the Alert time
-        builder.setMessage("Required fields are empty or too large");
+        builder.setMessage("Required fields are empty or too large or have special characters");
         // Set Alert Title
         builder.setTitle("MediClock Alert !");
 
