@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
         getTime(); // It refreshes the times from the shared preferences
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+        startService(new Intent(this, CommonAlarmRefreshService.class));
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();

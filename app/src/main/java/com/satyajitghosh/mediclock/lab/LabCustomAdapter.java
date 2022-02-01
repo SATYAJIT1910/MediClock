@@ -57,7 +57,7 @@ public class LabCustomAdapter extends ArrayAdapter<LabTestDataModel> {
         lab_name_view.setText(labTestDataModel.getTestName());
         lab_doctor.setText(labTestDataModel.getDoctorName());
 
-        String result = labTestDataModel.getDay() + "/" + (labTestDataModel.getMonth() + 1) + "/" + labTestDataModel.getYear();
+        String result = labTestDataModel.getDay() + "/" + (labTestDataModel.getMonth()) + "/" + labTestDataModel.getYear();
         lab_date_view.setText(result);
 
 

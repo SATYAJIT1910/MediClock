@@ -53,7 +53,7 @@ public class DocCustomAdapter extends ArrayAdapter<DoctorDataModel> {
 
         doc_name.setText(doctorDataModel.getName());
         doc_reason.setText(doctorDataModel.getReason());
-        String result = doctorDataModel.getDate() + "/" + (doctorDataModel.getMonth() + 1) + "/" + doctorDataModel.getYear();
+        String result = doctorDataModel.getDate() + "/" + (doctorDataModel.getMonth()) + "/" + doctorDataModel.getYear();
         doc_time.setText(result);
 
 

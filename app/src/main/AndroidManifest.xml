@@ -56,13 +56,14 @@
             </intent-filter>
         </activity> <!-- For AlarmService -->
         <receiver android:name=".medicine.MyBroadcastReceiver" />
+        <receiver android:name=".CommonBroadCastReceiver" />
 
         <service
             android:name=".medicine.MyAlarmService"
             android:enabled="true"
             android:exported="true" />
         <service
-            android:name=".medicine.AlarmRefreshService"
+            android:name=".CommonAlarmRefreshService"
             android:enabled="true"
             android:exported="true" />
 
