@@ -1,4 +1,4 @@
-package com.satyajitghosh.mediclock;
+package com.satyajitghosh.mediclock.medicine;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,12 +11,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
+import com.satyajitghosh.mediclock.R;
+
 /**
  * This activity is used for changing the default times
+ *
  * @author SATYAJIT GHOSH
  * @since 1.6.0
- *
- * */
+ */
 public class TimeChangeActivity extends AppCompatActivity {
     String time = "0000";
     private TextView morning_edit_time;
@@ -119,7 +121,8 @@ public class TimeChangeActivity extends AppCompatActivity {
 
     /**
      * It is used to convert the integer hour and minute information received from the picker to a string to display properly on textview
-     * @param hour it takes the hour information in Integer like 9 or 11
+     *
+     * @param hour   it takes the hour information in Integer like 9 or 11
      * @param minute it takes the minute information in Integer like 3 or 29
      * @return it returns a string made like "08:00" or "10:30"
      */
@@ -142,7 +145,8 @@ public class TimeChangeActivity extends AppCompatActivity {
 
     /**
      * It is used to convert the integer hour and minute information received from the picker to a string to send on sharedPreferences
-     * @param hour it takes the hour information in Integer like 9 or 11
+     *
+     * @param hour   it takes the hour information in Integer like 9 or 11
      * @param minute it takes the minute information in Integer like 3 or 29
      * @return it returns a string made like "0800" or "1030"
      */
@@ -164,6 +168,7 @@ public class TimeChangeActivity extends AppCompatActivity {
 
     /**
      * It is used on the fetched time information from the TIMEClass to make that information textview display ready
+     *
      * @param time It receives time as a string like "0830"
      * @return It returns like "08:30"
      */
@@ -173,6 +178,7 @@ public class TimeChangeActivity extends AppCompatActivity {
 
     /**
      * It is used to extract the hour from the time information.
+     *
      * @param time It receives the time as a string like "0830"
      * @return It returns the hour in Integer like 8
      */
@@ -183,6 +189,7 @@ public class TimeChangeActivity extends AppCompatActivity {
 
     /**
      * It is used to extract the minute from the time information
+     *
      * @param time It receives the time as string like "0830"
      * @return It returns the hour in Integer like 30
      */
@@ -202,8 +209,9 @@ public class TimeChangeActivity extends AppCompatActivity {
 
     /**
      * It is used to update the times in the shared preferences after receiving them from the picker
+     *
      * @param time It receives the time as a string (Ex- "0830")
-     * @param flag  This is used to know which information (MORNING/AFTERNOON/NIGHT) is needed to be updated
+     * @param flag This is used to know which information (MORNING/AFTERNOON/NIGHT) is needed to be updated
      */
     public void setTime(String time, int flag) {
         SharedPreferences sharedPref = getSharedPreferences("MySharedPref", MODE_PRIVATE);

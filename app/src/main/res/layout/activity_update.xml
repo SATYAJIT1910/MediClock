@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UpdateActivity">
+    tools:context=".medicine.UpdateActivity">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/up_name"
@@ -136,6 +136,7 @@
         android:layout_height="50dp"
         android:layout_marginEnd="80dp"
         android:text="cancel"
+        android:backgroundTint="#FF0000"
         app:layout_constraintBottom_toBottomOf="@+id/up_updatebtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/up_updatebtn"

@@ -9,7 +9,8 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" /> <!-- For apps with targetSDK=31 (Android 12) -->
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT"/>
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/mediclock_icon"
@@ -18,19 +19,31 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MediClock">
         <activity
-            android:name=".RingActivity"
+            android:name=".lab.labAddActivity"
             android:exported="false" />
         <activity
-            android:name=".TimeChangeActivity"
+            android:name=".doctor.DoctorAddActivity"
             android:exported="false" />
         <activity
-            android:name=".UpdateActivity"
+            android:name=".lab.labActivity"
             android:exported="false" />
         <activity
-            android:name=".DisplayMedicineActivity"
+            android:name=".doctor.DoctorActivity"
             android:exported="false" />
         <activity
-            android:name=".HomeActivity"
+            android:name=".medicine.RingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".medicine.TimeChangeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".medicine.UpdateActivity"
+            android:exported="false" />
+        <activity
+            android:name=".medicine.DisplayMedicineActivity"
+            android:exported="false" />
+        <activity
+            android:name=".medicine.HomeActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
@@ -38,18 +51,25 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity> <!-- For AlarmService -->
-        <receiver android:name=".MyBroadcastReceiver" />
+        <receiver android:name=".medicine.MyBroadcastReceiver" />
+        <receiver android:name=".CommonBroadCastReceiver" />
+
         <service
-            android:name=".MyAlarmService"
+            android:name=".medicine.MyAlarmService"
             android:enabled="true"
             android:exported="true" />
         <service
-            android:name=".AlarmRefreshService"
+            android:name=".CommonAlarmRefreshService"
             android:enabled="true"
             android:exported="true" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

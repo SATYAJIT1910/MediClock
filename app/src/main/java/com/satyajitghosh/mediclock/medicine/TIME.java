@@ -1,4 +1,4 @@
-package com.satyajitghosh.mediclock;
+package com.satyajitghosh.mediclock.medicine;
 
 /**
  * This class is used for storing the information of times , corresponding to Morning,Afternoon,Night declarations.

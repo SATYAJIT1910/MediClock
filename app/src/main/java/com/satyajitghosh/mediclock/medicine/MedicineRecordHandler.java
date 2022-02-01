@@ -1,4 +1,4 @@
-package com.satyajitghosh.mediclock;
+package com.satyajitghosh.mediclock.medicine;
 
 import java.util.ArrayList;
 
@@ -22,6 +22,7 @@ public class MedicineRecordHandler {
         this.reminder = reminder;
 
     }
+
     //Empty constructor is required here for FireBase
     public MedicineRecordHandler() {
     }

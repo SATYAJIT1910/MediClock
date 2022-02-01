@@ -1,6 +1,7 @@
-package com.satyajitghosh.mediclock;
+package com.satyajitghosh.mediclock.medicine;
 
-import android.app.AlarmManager;
+import static com.satyajitghosh.mediclock.medicine.AlarmManagerHandler.CHANNEL_ID;
+
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -12,12 +13,15 @@ import android.os.Vibrator;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
+
+import com.satyajitghosh.mediclock.R;
+
 /**
  * This service is started by the broadcastReceiver. It it is used for showing the notifications and alarms .
+ *
  * @author SATYAJIT GHOSH
  * @since 1.5.0
- *
- * */
+ */
 public class MyAlarmService extends Service {
 
     private Vibrator vibrator;
@@ -36,8 +40,8 @@ public class MyAlarmService extends Service {
         String MedicineName = intent.getStringExtra("MedicineName");
         String Food = intent.getStringExtra("Food");
         long time = intent.getLongExtra("time", 0);
-        int notificationId=intent.getIntExtra("notificationId",0);
-        AlarmManagerHandler.addAlert(getApplicationContext(),time,MedicineName,Food,notificationId); // It initiates the next alarm.
+        int notificationId = intent.getIntExtra("notificationId", 0);
+        AlarmManagerHandler.addAlert(getApplicationContext(), time, MedicineName, Food, notificationId); // It initiates the next alarm.
         long[] pattern = {0, 100, 500};
         vibrator.vibrate(pattern, 0);
 
@@ -53,7 +57,6 @@ public class MyAlarmService extends Service {
         super.onDestroy();
         mediaPlayer.stop();
         vibrator.cancel();
-
     }
 
     @Nullable
@@ -65,8 +68,8 @@ public class MyAlarmService extends Service {
 
     public void showNotification(Context context, String MedicineName, String Food) {
         Intent notificationIntent = new Intent(this, RingActivity.class).putExtra("MedicineName", MedicineName).putExtra("food", Food);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        Notification notification = new NotificationCompat.Builder(context, AlarmManagerHandler.CHANNEL_ID)
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, AlarmManagerHandler.setUniqueNotificationId(), notificationIntent, 0);
+        Notification notification = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.logo)
                 .setContentTitle("MediClock Reminder")
                 .setContentText("Hey, Take your medicine " + MedicineName + " " + Food + ".")

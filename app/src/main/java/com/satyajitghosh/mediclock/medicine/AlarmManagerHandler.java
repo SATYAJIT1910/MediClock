@@ -1,4 +1,4 @@
-package com.satyajitghosh.mediclock;
+package com.satyajitghosh.mediclock.medicine;
 
 import android.app.AlarmManager;
 import android.app.NotificationChannel;
@@ -53,16 +53,16 @@ public class AlarmManagerHandler extends AppCompatActivity {
         Intent intent = new Intent(context, MyBroadcastReceiver.class)
                 .putExtra("MedicineName", medicineName)
                 .putExtra("Food", Food)
-                .putExtra("time",time)
-                .putExtra("notificationId",notificationId)
+                .putExtra("time", time)
+                .putExtra("notificationId", notificationId)
                 .addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
 
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, notificationId, intent, 0);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
         try {
-            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,time,pendingIntent);
-           Log.d("Alarm","alarm Added for "+Long.toString(time));
+            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time, pendingIntent);
+            Log.d("Alarm", "alarm Added for " + time);
         } catch (Exception e) {
             Log.d("AlarmManagerError", e.toString());
             Toast.makeText(context.getApplicationContext(), "We cannot setup reminder on your Device", Toast.LENGTH_LONG).show();
@@ -71,26 +71,27 @@ public class AlarmManagerHandler extends AppCompatActivity {
 
     /**
      * This method is used for setting the repeated alarms
-     * @param context It provides the context
-     * @param time It provides the time in milliseconds of last fired alarm
-     * @param medicineName  It provides the medicine name
-     * @param Food It provides the food name
+     *
+     * @param context        It provides the context
+     * @param time           It provides the time in milliseconds of last fired alarm
+     * @param medicineName   It provides the medicine name
+     * @param Food           It provides the food name
      * @param notificationId It provides the notification id
      */
-    public static void addAlert(Context context,long time,String medicineName,String Food,int notificationId){
-        Calendar cal=Calendar.getInstance();
+    public static void addAlert(Context context, long time, String medicineName, String Food, int notificationId) {
+        Calendar cal = Calendar.getInstance();
         cal.getTimeInMillis();
         Intent intent = new Intent(context, MyBroadcastReceiver.class)
                 .putExtra("MedicineName", medicineName)
                 .putExtra("Food", Food)
-                .putExtra("time",time)
+                .putExtra("time", time)
                 .addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
 
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context,notificationId, intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, notificationId, intent, 0);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,cal.getTimeInMillis()+AlarmManager.INTERVAL_DAY,pendingIntent);
+        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis() + AlarmManager.INTERVAL_DAY, pendingIntent);
 
-        Log.d("Alarm","Repeated Alarm Added with notification id "+Integer.toString(notificationId));
+        Log.d("Alarm", "Repeated Alarm Added with notification id " + notificationId);
 
 
     }

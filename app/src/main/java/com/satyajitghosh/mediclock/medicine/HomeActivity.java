@@ -1,4 +1,4 @@
-package com.satyajitghosh.mediclock;
+package com.satyajitghosh.mediclock.medicine;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +18,7 @@ import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.satyajitghosh.mediclock.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +42,8 @@ public class HomeActivity extends AppCompatActivity {
     private boolean before_food;
     private Button show;
     private Button custom_time;
-    private String custom_time_value="0000";
+    private String custom_time_value = "0000";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,10 +55,10 @@ public class HomeActivity extends AppCompatActivity {
         note = findViewById(R.id.note);
         submitBtn = findViewById(R.id.submitbtn);
         materialButtonToggleGroup = findViewById(R.id.toggleButton);
-        materialButtonToggleGroup1=findViewById(R.id.toggleButton1);
+        materialButtonToggleGroup1 = findViewById(R.id.toggleButton1);
         radioGroup = findViewById(R.id.radioGroup);
-        show = findViewById(R.id.show);
-        custom_time=findViewById(R.id.custom_time);
+        show = findViewById(R.id.cancel_btn);
+        custom_time = findViewById(R.id.custom_time);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
@@ -76,20 +78,20 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 MaterialTimePicker picker;
-                if(custom_time.getText().toString().contains("Custom")){
+                if (custom_time.getText().toString().contains("Custom")) {
 
-                        picker =
-                        new MaterialTimePicker.Builder()
-                                .setTimeFormat(TimeFormat.CLOCK_24H)
-                                .setHour(0)
-                                .setMinute(0)
-                                .build();
-                }else{
                     picker =
                             new MaterialTimePicker.Builder()
                                     .setTimeFormat(TimeFormat.CLOCK_24H)
-                                    .setHour(Integer.parseInt(custom_time.getText().toString().substring(0,2)))
-                                    .setMinute(Integer.parseInt(custom_time.getText().toString().substring(3,5)))
+                                    .setHour(0)
+                                    .setMinute(0)
+                                    .build();
+                } else {
+                    picker =
+                            new MaterialTimePicker.Builder()
+                                    .setTimeFormat(TimeFormat.CLOCK_24H)
+                                    .setHour(Integer.parseInt(custom_time.getText().toString().substring(0, 2)))
+                                    .setMinute(Integer.parseInt(custom_time.getText().toString().substring(3, 5)))
                                     .build();
                 }
 
@@ -98,13 +100,12 @@ public class HomeActivity extends AppCompatActivity {
                 picker.addOnPositiveButtonClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        custom_time.setText(TimeChangeActivity.timeTextView(picker.getHour(),picker.getMinute()));
-                        custom_time_value=TimeChangeActivity.timeToString(picker.getHour(),picker.getMinute());
+                        custom_time.setText(TimeChangeActivity.timeTextView(picker.getHour(), picker.getMinute()));
+                        custom_time_value = TimeChangeActivity.timeToString(picker.getHour(), picker.getMinute());
                     }
                 });
             }
         });
-
 
 
         show.setOnClickListener(new View.OnClickListener() {
@@ -129,7 +130,7 @@ public class HomeActivity extends AppCompatActivity {
                         time.add(new TIME.AlarmBundle(TIME.AFTERNOON, AlarmManagerHandler.setUniqueNotificationId()));
                     } else if (i == R.id.night) {
                         time.add(new TIME.AlarmBundle(TIME.NIGHT, AlarmManagerHandler.setUniqueNotificationId()));
-                    } else if(i==R.id.custom_time){
+                    } else if (i == R.id.custom_time) {
                         time.add(new TIME.AlarmBundle(custom_time_value, AlarmManagerHandler.setUniqueNotificationId()));
                     }
                 }
@@ -145,6 +146,7 @@ public class HomeActivity extends AppCompatActivity {
                     );
                     myRef.child("MedicineRecord").child(PersonID).child(mrh.getName() + AlarmManagerHandler.setUniqueNotificationId()).setValue(mrh); // It writes the new data to FireBase Database
                     Toast.makeText(getApplicationContext(), "Added Successfully", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(HomeActivity.this, DisplayMedicineActivity.class));
                 } else {
                     InputValidationHandler.showDialog(HomeActivity.this); // It shows a dialog box informing user to fill the required fields.
                 }
@@ -152,7 +154,6 @@ public class HomeActivity extends AppCompatActivity {
         });
 
     }
-
 
 
 }

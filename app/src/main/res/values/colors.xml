@@ -5,4 +5,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="lemonGreen">#41E32F</color>
+    <color name="OrangeAeroSpace">#fd5200</color>
+    <color name="YellowAeroSpace">#FFE162</color>
 </resources>

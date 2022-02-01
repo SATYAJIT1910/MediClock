@@ -15,6 +15,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+import com.satyajitghosh.mediclock.medicine.DisplayMedicineActivity;
+import com.satyajitghosh.mediclock.medicine.HomeActivity;
+import com.satyajitghosh.mediclock.medicine.TIME;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
         getTime(); // It refreshes the times from the shared preferences
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+        startService(new Intent(this, CommonAlarmRefreshService.class));
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
@@ -94,7 +99,8 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
-    public void initSharedPref(){
+
+    public void initSharedPref() {
         SharedPreferences sharedPref = getSharedPreferences("MySharedPref", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("MORNING", TIME.MORNING);
@@ -105,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void getTime() {
         SharedPreferences sharedPref = getSharedPreferences("MySharedPref", MODE_PRIVATE);
-        if( sharedPref.getString("MORNING", "").length()==0){ // This satisfy no SharedPreferences exist
+        if (sharedPref.getString("MORNING", "").length() == 0) { // This satisfy no SharedPreferences exist
             initSharedPref();
         }
         TIME.MORNING = sharedPref.getString("MORNING", "");

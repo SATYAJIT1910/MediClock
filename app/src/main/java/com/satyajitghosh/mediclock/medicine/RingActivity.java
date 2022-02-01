@@ -1,4 +1,4 @@
-package com.satyajitghosh.mediclock;
+package com.satyajitghosh.mediclock.medicine;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,8 +9,11 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.satyajitghosh.mediclock.R;
+
 /**
  * This activity is used when the user receives alarms with a full screen intent. It has a dismiss button that helps user to dismiss the alarm
+ *
  * @author SATYAJIT GHOSH
  * @since 1.6.0
  */
@@ -25,7 +28,7 @@ public class RingActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String Medicine = intent.getStringExtra("MedicineName");
         String food = intent.getStringExtra("food");
-        String text = "I have already taken \n" + Medicine + " \n" + food;
+        String text = "Take the doses of \n" + Medicine + " \n" + food;
         textView = findViewById(R.id.medicine_name_view);
         textView.setText(text);
 
