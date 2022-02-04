@@ -19,6 +19,8 @@ import androidx.fragment.app.DialogFragment;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.satyajitghosh.mediclock.R;
@@ -47,8 +49,11 @@ public class labAddActivity extends AppCompatActivity {
         lab_doctor = findViewById(R.id.lab_doctor);
         lab_add_btn = findViewById(R.id.lab_add_btn);
 
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("LabTestRecord").child(Objects.requireNonNull(account.getId()));
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("LabTestRecord").child(Objects.requireNonNull(user.getUid()));
 
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,

@@ -16,6 +16,8 @@ import android.widget.TextView;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.material.bottomappbar.BottomAppBar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,7 +33,6 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class labActivity extends AppCompatActivity {
-    protected GoogleSignInAccount account;
     private ListView listview;
     private DatabaseReference mDatabase;
     private ArrayList<LabTestDataModel> arrayList;
@@ -43,14 +44,18 @@ public class labActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lab);
 
-        account = GoogleSignIn.getLastSignedInAccount(this);
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("LabTestRecord").child(Objects.requireNonNull(account.getId())); //Takes the relative path of the user to get the instance of only that user not others.
+
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("LabTestRecord").child(Objects.requireNonNull(user.getUid())); //Takes the relative path of the user to get the instance of only that user not others.
         listview = findViewById(R.id.lab_listview);
         bottomAppBar = findViewById(R.id.lab_bottomAppBar);
 
         arrayList = new ArrayList<>();
         TextView account_user_name_view = findViewById(R.id.lab_account_user_name_view);
-        account_user_name_view.setText("Hi, " + account.getDisplayName()); //This is used to show the name of user on screen
+        account_user_name_view.setText("Hi, " + user.getDisplayName()); //This is used to show the name of user on screen
         account_user_name_view.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade));
 
         c = new LabCustomAdapter(getApplicationContext(), arrayList);

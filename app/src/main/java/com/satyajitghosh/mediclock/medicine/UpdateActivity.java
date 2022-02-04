@@ -8,13 +8,13 @@ import android.widget.RadioGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.satyajitghosh.mediclock.R;
@@ -47,10 +47,12 @@ public class UpdateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update);
 
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference().child("MedicineRecord").child(Objects.requireNonNull(account.getId()));
-        String PersonID = account.getId();
+        DatabaseReference myRef = database.getReference().child("MedicineRecord").child(Objects.requireNonNull(user.getUid()));
+        String PersonID = user.getUid();
 
         name = findViewById(R.id.up_name);
         note = findViewById(R.id.up_note);
@@ -77,7 +79,7 @@ public class UpdateActivity extends AppCompatActivity {
 
                     startActivity(
                             new Intent(UpdateActivity.this, DisplayMedicineActivity.class)
-                                    .putExtra("UserName", account.getDisplayName()).putExtra("Id", account.getId())
+                                    .putExtra("UserName", user.getDisplayName()).putExtra("Id", user.getUid())
                     );
                 } else {
                     InputValidationHandler.showDialog(UpdateActivity.this);
@@ -127,7 +129,7 @@ public class UpdateActivity extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(
                         new Intent(UpdateActivity.this, DisplayMedicineActivity.class)
-                                .putExtra("UserName", account.getDisplayName()).putExtra("Id", account.getId())
+                                .putExtra("UserName", user.getDisplayName()).putExtra("Id", user.getUid())
                 );
             }
         });

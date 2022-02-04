@@ -14,6 +14,8 @@ import androidx.annotation.Nullable;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.satyajitghosh.mediclock.R;
@@ -33,12 +35,15 @@ public class CustomAdapter extends ArrayAdapter<MedicineRecordHandler> {
     //This codes helps to get the reference of the FireBase Database and the instances of it.
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
-    GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getContext());
+    FirebaseUser user;
 
 
     public CustomAdapter(@NonNull Context context, @NonNull ArrayList<MedicineRecordHandler> arrayList) {
         super(context, 0, arrayList);
         this.arrayList = arrayList;
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
     }
 
     public void UpdateArrayList(MedicineRecordHandler data) {
@@ -96,7 +101,7 @@ public class CustomAdapter extends ArrayAdapter<MedicineRecordHandler> {
             public void onClick(View view) {
                 MedicineRecordHandler mrd = arrayList.get(position);
                 arrayList.clear();
-                myRef.child("MedicineRecord").child(account.getId()).child(mrd.key).removeValue(); //This removes the child from the FireBase database .
+                myRef.child("MedicineRecord").child(user.getUid()).child(mrd.key).removeValue(); //This removes the child from the FireBase database .
                 Toast.makeText(getContext(), "Deleted", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getContext(), MyBroadcastReceiver.class);
                 AlarmManagerHandler.cancelAlarm(getContext(), intent, mrd);

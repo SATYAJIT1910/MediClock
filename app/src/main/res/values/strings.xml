@@ -1,11 +1,4 @@
 <resources>
     <string name="app_name">MediClock</string>
 
-    <string-array name="lab_tests">
-        <item>ECG</item>
-        <item>EEG</item>
-        <item>BLOOD TEST</item>
-        <item>LIVER FUNCTION</item>
-    </string-array>
-
 </resources>

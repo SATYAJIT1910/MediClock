@@ -14,6 +14,8 @@ import androidx.annotation.Nullable;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.satyajitghosh.mediclock.R;
@@ -22,18 +24,22 @@ import java.util.ArrayList;
 
 public class DocCustomAdapter extends ArrayAdapter<DoctorDataModel> {
 
-
+    private final FirebaseAuth mAuth;
+    private final FirebaseUser user;
     private ArrayList<DoctorDataModel> arrayList;
 
     //This codes helps to get the reference of the FireBase Database and the instances of it.
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
-    GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getContext());
+
+
 
     public DocCustomAdapter(@NonNull Context context, ArrayList<DoctorDataModel> arrayList) {
         super(context, 0, arrayList);
         this.arrayList=new ArrayList<>();
         this.arrayList=arrayList;
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
     }
 
 
@@ -62,7 +68,7 @@ public class DocCustomAdapter extends ArrayAdapter<DoctorDataModel> {
             @Override
             public void onClick(View view) {
                 DoctorDataModel ddm = arrayList.get(position);
-                myRef.child("AppointmentRecord").child(account.getId()).child(ddm.key).removeValue(); //This removes the child from the FireBase database .
+                myRef.child("AppointmentRecord").child(user.getUid()).child(ddm.key).removeValue(); //This removes the child from the FireBase database .
                 Toast.makeText(getContext(), "Deleted", Toast.LENGTH_SHORT).show();
                 //Cancel the alarm code here
             }

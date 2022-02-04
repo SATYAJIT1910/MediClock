@@ -16,6 +16,8 @@ import androidx.appcompat.widget.Toolbar;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.material.bottomappbar.BottomAppBar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -49,13 +51,16 @@ public class DisplayMedicineActivity extends AppCompatActivity {
         setContentView(R.layout.activity_display_medicine);
 
         account = GoogleSignIn.getLastSignedInAccount(this);
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("MedicineRecord").child(Objects.requireNonNull(account.getId())); //Takes the relative path of the user to get the instance of only that user not others.
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("MedicineRecord").child(Objects.requireNonNull(user.getUid())); //Takes the relative path of the user to get the instance of only that user not others.
         listview = findViewById(R.id.listview);
         bottomAppBar = findViewById(R.id.bottomAppBar);
 
         arrayList = new ArrayList<>();
         TextView account_user_name_view = findViewById(R.id.account_user_name_view);
-        account_user_name_view.setText("Hi, " + account.getDisplayName()); //This is used to show the name of user on screen
+        account_user_name_view.setText("Hi, " + user.getDisplayName()); //This is used to show the name of user on screen
         account_user_name_view.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade));
 
         c = new CustomAdapter(getApplicationContext(), arrayList);
@@ -81,7 +86,7 @@ public class DisplayMedicineActivity extends AppCompatActivity {
         findViewById(R.id.add_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(DisplayMedicineActivity.this, HomeActivity.class).putExtra("UserName", account.getDisplayName()).putExtra("Id", account.getId())
+                startActivity(new Intent(DisplayMedicineActivity.this, HomeActivity.class).putExtra("UserName", user.getDisplayName()).putExtra("Id", user.getUid())
                         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK)
                 );
             }

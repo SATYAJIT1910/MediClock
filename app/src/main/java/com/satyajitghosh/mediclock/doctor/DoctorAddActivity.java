@@ -17,6 +17,8 @@ import androidx.fragment.app.DialogFragment;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.satyajitghosh.mediclock.R;
@@ -45,8 +47,10 @@ public class DoctorAddActivity extends AppCompatActivity {
         doctor_reason = findViewById(R.id.doctor_reason);
         doctor_add_btn = findViewById(R.id.doctor_add_btn);
 
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("AppointmentRecord").child(Objects.requireNonNull(account.getId()));
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("AppointmentRecord").child(Objects.requireNonNull(user.getUid()));
 
 
         doctor_add_btn.setOnClickListener(new View.OnClickListener() {

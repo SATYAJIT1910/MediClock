@@ -15,6 +15,8 @@ import androidx.annotation.Nullable;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.satyajitghosh.mediclock.R;
@@ -31,11 +33,14 @@ public class LabCustomAdapter extends ArrayAdapter<LabTestDataModel> {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
     GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getContext());
-
+    FirebaseUser user;
     public LabCustomAdapter(@NonNull Context context, ArrayList<LabTestDataModel> arrayList) {
         super(context, 0, arrayList);
         this.arrayList=new ArrayList<>();
         this.arrayList=arrayList;
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
     }
 
 
@@ -67,7 +72,7 @@ public class LabCustomAdapter extends ArrayAdapter<LabTestDataModel> {
             public void onClick(View view) {
 
                 LabTestDataModel obj=arrayList.get(position);
-                myRef.child("LabTestRecord").child(account.getId()).child(obj.key).removeValue(); //This removes the child from the FireBase database .
+                myRef.child("LabTestRecord").child(user.getUid()).child(obj.key).removeValue(); //This removes the child from the FireBase database .
                 Toast.makeText(getContext(), "Deleted", Toast.LENGTH_SHORT).show();
                 //Cancel the alarm code here
             }

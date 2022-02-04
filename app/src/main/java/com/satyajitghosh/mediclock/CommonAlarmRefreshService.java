@@ -12,6 +12,8 @@ import androidx.annotation.Nullable;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,9 +36,13 @@ public class CommonAlarmRefreshService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         Log.d("CommonAlarmRefreshService","Service Started");
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        mDatabaseDoc = FirebaseDatabase.getInstance().getReference().child("AppointmentRecord").child(Objects.requireNonNull(account.getId()));
-        mDatabaseLab= FirebaseDatabase.getInstance().getReference().child("LabTestRecord").child(Objects.requireNonNull(account.getId()));
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+
+
+        mDatabaseDoc = FirebaseDatabase.getInstance().getReference().child("AppointmentRecord").child(Objects.requireNonNull(user.getUid()));
+        mDatabaseLab= FirebaseDatabase.getInstance().getReference().child("LabTestRecord").child(Objects.requireNonNull(user.getUid()));
         mDatabaseDoc.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {

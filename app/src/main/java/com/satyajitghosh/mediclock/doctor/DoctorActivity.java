@@ -16,6 +16,8 @@ import androidx.appcompat.widget.Toolbar;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.material.bottomappbar.BottomAppBar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,20 +38,23 @@ public class DoctorActivity extends AppCompatActivity {
     private ArrayList<DoctorDataModel> arrayList;
     private DocCustomAdapter c;
     private BottomAppBar bottomAppBar;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor);
 
-        account = GoogleSignIn.getLastSignedInAccount(this);
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("AppointmentRecord").child(Objects.requireNonNull(account.getId())); //Takes the relative path of the user to get the instance of only that user not others.
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("AppointmentRecord").child(Objects.requireNonNull(user.getUid())); //Takes the relative path of the user to get the instance of only that user not others.
         listview = findViewById(R.id.doctor_listview);
         bottomAppBar = findViewById(R.id.doctor_bottomAppBar);
 
         arrayList = new ArrayList<>();
         TextView account_user_name_view = findViewById(R.id.doctor_account_user_name_view);
-        account_user_name_view.setText("Hi, " + account.getDisplayName()); //This is used to show the name of user on screen
+        account_user_name_view.setText("Hi, " + user.getDisplayName()); //This is used to show the name of user on screen
         account_user_name_view.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade));
 
         c = new DocCustomAdapter(getApplicationContext(), arrayList);
