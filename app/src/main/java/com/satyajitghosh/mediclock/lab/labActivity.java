@@ -1,10 +1,5 @@
 package com.satyajitghosh.mediclock.lab;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -13,8 +8,11 @@ import android.view.animation.AnimationUtils;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -24,9 +22,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.satyajitghosh.mediclock.R;
-import com.satyajitghosh.mediclock.doctor.DocCustomAdapter;
 import com.satyajitghosh.mediclock.doctor.DoctorActivity;
-import com.satyajitghosh.mediclock.doctor.DoctorDataModel;
 import com.satyajitghosh.mediclock.medicine.DisplayMedicineActivity;
 
 import java.util.ArrayList;
@@ -43,7 +39,6 @@ public class labActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lab);
-
 
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -63,8 +58,8 @@ public class labActivity extends AppCompatActivity {
         mDatabase.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                LabTestDataModel labTestDataModel=snapshot.getValue(LabTestDataModel.class);
-                labTestDataModel.key=snapshot.getKey();
+                LabTestDataModel labTestDataModel = snapshot.getValue(LabTestDataModel.class);
+                labTestDataModel.key = snapshot.getKey();
                 arrayList.add(labTestDataModel);
                 c.notifyDataSetChanged();
                 emptyImage();
@@ -78,7 +73,7 @@ public class labActivity extends AppCompatActivity {
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
 
-                LabTestDataModel labTestDataModel=snapshot.getValue(LabTestDataModel.class);
+                LabTestDataModel labTestDataModel = snapshot.getValue(LabTestDataModel.class);
                 labTestDataModel.key = snapshot.getKey();
 
                 for (int i = 0; i < arrayList.size(); i++) {
@@ -107,13 +102,13 @@ public class labActivity extends AppCompatActivity {
         bottomAppBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.nav_lab_medicine:
                         startActivity(new Intent(labActivity.this, DisplayMedicineActivity.class));
                         break;
                     case R.id.nav_lab_doc:
-                            startActivity(new Intent(labActivity.this,DoctorActivity.class));
-                            break;
+                        startActivity(new Intent(labActivity.this, DoctorActivity.class));
+                        break;
                     default:
                         return false;
                 }
@@ -123,7 +118,7 @@ public class labActivity extends AppCompatActivity {
         findViewById(R.id.lab_add_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(labActivity.this,labAddActivity.class));
+                startActivity(new Intent(labActivity.this, labAddActivity.class));
             }
         });
 

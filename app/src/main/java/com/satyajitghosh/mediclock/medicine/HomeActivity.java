@@ -49,7 +49,6 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        startService(new Intent(this, AlarmRefreshService.class));
 
         name = findViewById(R.id.name);
         note = findViewById(R.id.note);

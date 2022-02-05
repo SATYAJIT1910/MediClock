@@ -12,8 +12,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -26,18 +24,16 @@ public class DocCustomAdapter extends ArrayAdapter<DoctorDataModel> {
 
     private final FirebaseAuth mAuth;
     private final FirebaseUser user;
-    private ArrayList<DoctorDataModel> arrayList;
-
     //This codes helps to get the reference of the FireBase Database and the instances of it.
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
-
+    private ArrayList<DoctorDataModel> arrayList;
 
 
     public DocCustomAdapter(@NonNull Context context, ArrayList<DoctorDataModel> arrayList) {
         super(context, 0, arrayList);
-        this.arrayList=new ArrayList<>();
-        this.arrayList=arrayList;
+        this.arrayList = new ArrayList<>();
+        this.arrayList = arrayList;
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
     }
@@ -50,12 +46,12 @@ public class DocCustomAdapter extends ArrayAdapter<DoctorDataModel> {
         if (currentItemView == null) {
             currentItemView = LayoutInflater.from(getContext()).inflate(R.layout.doctor_custom_list_view, parent, false);
         }
-        TextView doc_name=currentItemView.findViewById(R.id.doc_name_view);
-        TextView doc_reason=currentItemView.findViewById(R.id.doc_reason);
-        TextView doc_time=currentItemView.findViewById(R.id.doc_time_view);
-        ImageView delete_btn=currentItemView.findViewById(R.id.doc_delete_btn);
+        TextView doc_name = currentItemView.findViewById(R.id.doc_name_view);
+        TextView doc_reason = currentItemView.findViewById(R.id.doc_reason);
+        TextView doc_time = currentItemView.findViewById(R.id.doc_time_view);
+        ImageView delete_btn = currentItemView.findViewById(R.id.doc_delete_btn);
 
-        DoctorDataModel doctorDataModel=arrayList.get(position);
+        DoctorDataModel doctorDataModel = arrayList.get(position);
 
         doc_name.setText(doctorDataModel.getName());
         doc_reason.setText(doctorDataModel.getReason());

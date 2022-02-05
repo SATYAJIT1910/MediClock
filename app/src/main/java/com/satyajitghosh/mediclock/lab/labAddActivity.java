@@ -16,8 +16,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -35,7 +33,7 @@ public class labAddActivity extends AppCompatActivity {
             "amniocentesis", "blood analysis", "blood count", "blood typing", "bone marrow aspiration", "cephalin-cholesterol flocculation", "enzyme analysis", "epinephrine tolerance test", "glucose tolerance test", "hematocrit", "immunologic blood test", "inulin clearance", "serological test", "thymol turbidity", "gastric fluid analysis", "kidney function test", "liver function test", "lumbar puncture", "malabsorption test", "Pap smear", "phenolsulfonphthalein test", "pregnancy test", "prenatal testing", "protein-bound iodine test", "syphilis test", "thoracentesis", "thyroid function test", "toxicology test", "urinalysis", "angiocardiography", "angiography", "cerebral angiography", "brain scanning", "echoencephalography", "magnetoencephalography", "pneumoencephalography", "cholecystography", "echocardiography", "endoscopic retrograde cholangiopancreatoscopy", "lung ventilation/perfusion scan", "magnetic resonance imaging", "cardiac magnetic resonance imaging", "functional magnetic resonance imaging", "magnetic resonance spectroscopy", "mammography", "myelography", "prenatal testing", "tomography", "computed tomography", "positron emission tomography", "single photon emission computed tomography", "ultrasound", "urography"
     };
     private static TextView lab_date_view;
-    private static int[] arr = new int[3];
+    private static final int[] arr = new int[3];
     private DatabaseReference mDatabase;
     private TextInputLayout lab_doctor;
     private Button lab_add_btn;
@@ -74,7 +72,7 @@ public class labAddActivity extends AppCompatActivity {
                     LabTestDataModel obj = new LabTestDataModel(arr[0], arr[1], arr[2], testName, docName, AlarmManagerHandler.setUniqueNotificationId());
                     mDatabase.child(obj.getTestName() + AlarmManagerHandler.setUniqueNotificationId()).setValue(obj);
                     Toast.makeText(getApplicationContext(), "Added", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(labAddActivity.this,labActivity.class));
+                    startActivity(new Intent(labAddActivity.this, labActivity.class));
                 } else {
                     InputValidationHandler.showDialog(labAddActivity.this);
                 }
@@ -109,7 +107,7 @@ public class labAddActivity extends AppCompatActivity {
             final Calendar c = Calendar.getInstance();
             int year = c.get(Calendar.YEAR);
             int month = c.get(Calendar.MONTH);
-            c.set(Calendar.DAY_OF_MONTH,c.get(Calendar.DAY_OF_MONTH)+1);
+            c.set(Calendar.DAY_OF_MONTH, c.get(Calendar.DAY_OF_MONTH) + 1);
             int day = c.get(Calendar.DAY_OF_MONTH);
             DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), this, year, month, day);
             datePickerDialog.getDatePicker().setMinDate(c.getTimeInMillis());

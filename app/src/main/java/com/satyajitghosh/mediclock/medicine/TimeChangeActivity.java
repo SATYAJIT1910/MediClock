@@ -25,6 +25,53 @@ public class TimeChangeActivity extends AppCompatActivity {
     private TextView lunch_edit_time;
     private TextView night_edit_time;
 
+    /**
+     * It is used to convert the integer hour and minute information received from the picker to a string to display properly on textview
+     *
+     * @param hour   it takes the hour information in Integer like 9 or 11
+     * @param minute it takes the minute information in Integer like 3 or 29
+     * @return it returns a string made like "08:00" or "10:30"
+     */
+    public static String timeTextView(int hour, int minute) {
+        String result = "";
+        if (hour < 10) {
+            result = "0" + hour;
+        } else {
+            result = Integer.toString(hour);
+        }
+        result += ":";
+        if (minute < 10) {
+            result += "0" + minute;
+        } else {
+            result += Integer.toString(minute);
+        }
+
+        return result;
+    }
+
+    /**
+     * It is used to convert the integer hour and minute information received from the picker to a string to send on sharedPreferences
+     *
+     * @param hour   it takes the hour information in Integer like 9 or 11
+     * @param minute it takes the minute information in Integer like 3 or 29
+     * @return it returns a string made like "0800" or "1030"
+     */
+    public static String timeToString(int hour, int minute) {
+        String result = "";
+        if (hour < 10) {
+            result = "0" + hour;
+        } else {
+            result = Integer.toString(hour);
+        }
+        if (minute < 10) {
+            result += "0" + minute;
+        } else {
+            result += Integer.toString(minute);
+        }
+
+        return result;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,53 +164,6 @@ public class TimeChangeActivity extends AppCompatActivity {
 
             }
         });
-    }
-
-    /**
-     * It is used to convert the integer hour and minute information received from the picker to a string to display properly on textview
-     *
-     * @param hour   it takes the hour information in Integer like 9 or 11
-     * @param minute it takes the minute information in Integer like 3 or 29
-     * @return it returns a string made like "08:00" or "10:30"
-     */
-    public static String timeTextView(int hour, int minute) {
-        String result = "";
-        if (hour < 10) {
-            result = "0" + hour;
-        } else {
-            result = Integer.toString(hour);
-        }
-        result += ":";
-        if (minute < 10) {
-            result += "0" + minute;
-        } else {
-            result += Integer.toString(minute);
-        }
-
-        return result;
-    }
-
-    /**
-     * It is used to convert the integer hour and minute information received from the picker to a string to send on sharedPreferences
-     *
-     * @param hour   it takes the hour information in Integer like 9 or 11
-     * @param minute it takes the minute information in Integer like 3 or 29
-     * @return it returns a string made like "0800" or "1030"
-     */
-    public static String timeToString(int hour, int minute) {
-        String result = "";
-        if (hour < 10) {
-            result = "0" + hour;
-        } else {
-            result = Integer.toString(hour);
-        }
-        if (minute < 10) {
-            result += "0" + minute;
-        } else {
-            result += Integer.toString(minute);
-        }
-
-        return result;
     }
 
     /**

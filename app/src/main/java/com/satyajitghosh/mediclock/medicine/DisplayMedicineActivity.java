@@ -24,13 +24,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.satyajitghosh.mediclock.R;
 import com.satyajitghosh.mediclock.doctor.DoctorActivity;
 import com.satyajitghosh.mediclock.lab.labActivity;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Objects;
 
 /**
@@ -40,10 +38,10 @@ import java.util.Objects;
  * @since 1.0.0
  */
 public class DisplayMedicineActivity extends AppCompatActivity {
+    protected GoogleSignInAccount account;
     private ListView listview;
     private DatabaseReference mDatabase;
     private ArrayList<MedicineRecordHandler> arrayList;
-    protected GoogleSignInAccount account;
     private CustomAdapter c;
     private BottomAppBar bottomAppBar;
 
@@ -70,8 +68,8 @@ public class DisplayMedicineActivity extends AppCompatActivity {
         mDatabase.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                MedicineRecordHandler medicineRecordHandler=snapshot.getValue(MedicineRecordHandler.class);
-                medicineRecordHandler.key=snapshot.getKey();
+                MedicineRecordHandler medicineRecordHandler = snapshot.getValue(MedicineRecordHandler.class);
+                medicineRecordHandler.key = snapshot.getKey();
                 arrayList.add(medicineRecordHandler);
                 emptyImage();
                 c.notifyDataSetChanged();
@@ -85,8 +83,8 @@ public class DisplayMedicineActivity extends AppCompatActivity {
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-                MedicineRecordHandler medicineRecordHandler=snapshot.getValue(MedicineRecordHandler.class);
-                medicineRecordHandler.key=snapshot.getKey();
+                MedicineRecordHandler medicineRecordHandler = snapshot.getValue(MedicineRecordHandler.class);
+                medicineRecordHandler.key = snapshot.getKey();
 
                 for (int i = 0; i < arrayList.size(); i++) {
                     if (medicineRecordHandler.key.equals(arrayList.get(i).key)) {

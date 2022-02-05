@@ -62,7 +62,6 @@ public class AlarmManagerHandler extends AppCompatActivity {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
         try {
             alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time, pendingIntent);
-            Log.d("Alarm", "alarm Added for " + time);
         } catch (Exception e) {
             Log.d("AlarmManagerError", e.toString());
             Toast.makeText(context.getApplicationContext(), "We cannot setup reminder on your Device", Toast.LENGTH_LONG).show();
@@ -90,8 +89,6 @@ public class AlarmManagerHandler extends AppCompatActivity {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, notificationId, intent, 0);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
         alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis() + AlarmManager.INTERVAL_DAY, pendingIntent);
-
-        Log.d("Alarm", "Repeated Alarm Added with notification id " + notificationId);
 
 
     }
@@ -122,10 +119,10 @@ public class AlarmManagerHandler extends AppCompatActivity {
      * This method is used to cancel the alarms.
      *
      * @param context it provides the context
-     * @param intent  it provides the intent to cancel the alarm
      * @param mrh     it is the object of MedicineRecordHandler class. It is used here to fetch the notificationId of a alarm to cancel that particular alarm.
      */
-    public static void cancelAlarm(Context context, Intent intent, MedicineRecordHandler mrh) {
+    public static void cancelAlarm(Context context, MedicineRecordHandler mrh) {
+        Intent intent = new Intent(context, MyBroadcastReceiver.class);
 
         for (TIME.AlarmBundle i : mrh.getReminder()) {
             AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);

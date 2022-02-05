@@ -3,11 +3,11 @@ package com.satyajitghosh.mediclock.medicine;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,19 +28,20 @@ import java.util.Objects;
  * @since 1.5.0
  */
 public class AlarmRefreshService extends Service {
-    private DatabaseReference mDatabase;
     protected GoogleSignInAccount account;
+    private DatabaseReference mDatabase;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
-
+        Log.d("AlarmRefreshService", "AlarmRefreshService Started");
         mDatabase = FirebaseDatabase.getInstance().getReference().child("MedicineRecord").child(Objects.requireNonNull(user.getUid()));
         mDatabase.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 refreshData(snapshot);
+
             }
 
             @Override
@@ -50,7 +51,7 @@ public class AlarmRefreshService extends Service {
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
+                deleteData(snapshot);
             }
 
             @Override
@@ -82,6 +83,11 @@ public class AlarmRefreshService extends Service {
 
         MedicineRecordHandler mrd = snapshot.getValue(MedicineRecordHandler.class);
         AlarmManagerHandler.initAlarm(mrd, getApplicationContext());
+    }
+
+    public void deleteData(DataSnapshot snapshot) {
+        MedicineRecordHandler mrd = snapshot.getValue(MedicineRecordHandler.class);
+        AlarmManagerHandler.cancelAlarm(getApplicationContext(), mrd);
     }
 
 

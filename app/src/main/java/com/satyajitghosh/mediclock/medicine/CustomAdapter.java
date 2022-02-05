@@ -12,8 +12,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -72,7 +70,7 @@ public class CustomAdapter extends ArrayAdapter<MedicineRecordHandler> {
                 output_time += "Afternoon ";
 
             } else if (j.contains(TIME.NIGHT)) {
-                output_time += "Night";
+                output_time += "Night ";
             } else {
                 output_time += j.substring(0, 2) + ":" + j.substring(2, 4);
             }
@@ -94,8 +92,6 @@ public class CustomAdapter extends ArrayAdapter<MedicineRecordHandler> {
                 MedicineRecordHandler mrd = arrayList.get(position);
                 myRef.child("MedicineRecord").child(user.getUid()).child(mrd.key).removeValue(); //This removes the child from the FireBase database .
                 Toast.makeText(getContext(), "Deleted", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getContext(), MyBroadcastReceiver.class);
-                AlarmManagerHandler.cancelAlarm(getContext(), intent, mrd);
             }
         });
 

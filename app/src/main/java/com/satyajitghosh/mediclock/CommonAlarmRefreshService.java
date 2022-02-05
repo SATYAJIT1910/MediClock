@@ -10,7 +10,6 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -21,28 +20,29 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.satyajitghosh.mediclock.doctor.DoctorDataModel;
 import com.satyajitghosh.mediclock.lab.LabTestDataModel;
+import com.satyajitghosh.mediclock.medicine.AlarmRefreshService;
 
 import java.util.Calendar;
-import java.util.Locale;
 import java.util.Objects;
 
 public class CommonAlarmRefreshService extends Service {
 
+    protected GoogleSignInAccount account;
     private DatabaseReference mDatabaseDoc;
     private DatabaseReference mDatabaseLab;
-    protected GoogleSignInAccount account;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        Log.d("CommonAlarmRefreshService","Service Started");
+        Log.d("CommonAlarmRefreshService", "CommonAlarmRefreshService Started");
+        startService(new Intent(this, AlarmRefreshService.class));
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
 
 
         mDatabaseDoc = FirebaseDatabase.getInstance().getReference().child("AppointmentRecord").child(Objects.requireNonNull(user.getUid()));
-        mDatabaseLab= FirebaseDatabase.getInstance().getReference().child("LabTestRecord").child(Objects.requireNonNull(user.getUid()));
+        mDatabaseLab = FirebaseDatabase.getInstance().getReference().child("LabTestRecord").child(Objects.requireNonNull(user.getUid()));
         mDatabaseDoc.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -107,48 +107,52 @@ public class CommonAlarmRefreshService extends Service {
         return null;
     }
 
-    public void LabrefreshData(DataSnapshot snapshot){
-        LabTestDataModel labTestDataModel=snapshot.getValue(LabTestDataModel.class);
-        int date=labTestDataModel.getDay();
-        int month=labTestDataModel.getMonth();
-        int year=labTestDataModel.getYear();
-        Calendar calendar=Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY,8);
-        calendar.set(Calendar.MINUTE,0);
+    public void LabrefreshData(DataSnapshot snapshot) {
+        LabTestDataModel labTestDataModel = snapshot.getValue(LabTestDataModel.class);
+        int date = labTestDataModel.getDay();
+        int month = labTestDataModel.getMonth();
+        int year = labTestDataModel.getYear();
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 8);
+        calendar.set(Calendar.MINUTE, 00);
         calendar.set(Calendar.SECOND, 0);
-        calendar.set(calendar.DAY_OF_MONTH,date);
-        calendar.set(calendar.MONTH,month-1);
-        calendar.set(Calendar.YEAR,year);
-        long time=calendar.getTimeInMillis();
+        calendar.set(Calendar.DAY_OF_MONTH, date);
+        calendar.set(Calendar.MONTH, month - 1);
+        calendar.set(Calendar.YEAR, year);
+        long time = calendar.getTimeInMillis();
 
+        if (time <= System.currentTimeMillis()) {
+            return;
+        }
         Intent intent = new Intent(this, CommonBroadCastReceiver.class)
-                .putExtra("TestName", labTestDataModel.getTestName()).putExtra("flag",false);
+                .putExtra("TestName", labTestDataModel.getTestName()).putExtra("flag", false);
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, labTestDataModel.getNotificationId(), intent, 0);
         AlarmManager alarmManager = (AlarmManager) this.getSystemService(ALARM_SERVICE);
-        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,time,pendingIntent);
+        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time, pendingIntent);
 
-        Log.d("CommonAlarmRefreshService","Alarm Added for Lab Test");
+
     }
 
     public void DocrefreshData(DataSnapshot snapshot) {
 
-        DoctorDataModel doctorDataModel=snapshot.getValue(DoctorDataModel.class);
+        DoctorDataModel doctorDataModel = snapshot.getValue(DoctorDataModel.class);
         assert doctorDataModel != null;
-        int date=doctorDataModel.getDate();
-        int month=doctorDataModel.getMonth();
-        int year=doctorDataModel.getYear();
-        Calendar calendar=Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY,8);
-        calendar.set(Calendar.MINUTE,0);
+        int date = doctorDataModel.getDate();
+        int month = doctorDataModel.getMonth();
+        int year = doctorDataModel.getYear();
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 8);
+        calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
-        Log.d("CalTime",Long.toString(calendar.getTimeInMillis()));
-        calendar.set(calendar.DAY_OF_MONTH,date);
-        calendar.set(calendar.MONTH,month-1);
-        calendar.set(Calendar.YEAR,year);
-        Log.d("CalTime",Long.toString(calendar.getTimeInMillis()));
-        long time=calendar.getTimeInMillis();
+        calendar.set(Calendar.DAY_OF_MONTH, date);
+        calendar.set(Calendar.MONTH, month - 1);
+        calendar.set(Calendar.YEAR, year);
+        long time = calendar.getTimeInMillis();
 
+        if (time <= System.currentTimeMillis()) {
+            return;
+        }
         Intent intent = new Intent(this, CommonBroadCastReceiver.class)
                 .putExtra("DoctorName", doctorDataModel.getName())
                 .putExtra("reason", doctorDataModel.getReason());
@@ -156,12 +160,13 @@ public class CommonAlarmRefreshService extends Service {
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, doctorDataModel.getNotificationId(), intent, 0);
         AlarmManager alarmManager = (AlarmManager) this.getSystemService(ALARM_SERVICE);
-        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,time,pendingIntent);
+        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time, pendingIntent);
 
-        Log.d("CommonAlarmRefreshService","Alarm Added");
+
     }
-    public void onDeleteDoc(DataSnapshot snapshot){
-        DoctorDataModel doctorDataModel=snapshot.getValue(DoctorDataModel.class);
+
+    public void onDeleteDoc(DataSnapshot snapshot) {
+        DoctorDataModel doctorDataModel = snapshot.getValue(DoctorDataModel.class);
 
         Intent intent = new Intent(this, CommonAlarmRefreshService.class);
 
@@ -171,8 +176,9 @@ public class CommonAlarmRefreshService extends Service {
         alarmManager.cancel(pendingIntent);
 
     }
-    public void onDeleteLab(DataSnapshot snapshot){
-        LabTestDataModel labTestDataModel=snapshot.getValue(LabTestDataModel.class);
+
+    public void onDeleteLab(DataSnapshot snapshot) {
+        LabTestDataModel labTestDataModel = snapshot.getValue(LabTestDataModel.class);
 
         Intent intent = new Intent(this, CommonAlarmRefreshService.class);
 

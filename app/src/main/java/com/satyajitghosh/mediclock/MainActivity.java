@@ -33,30 +33,23 @@ import com.satyajitghosh.mediclock.medicine.TIME;
 
 public class MainActivity extends AppCompatActivity {
 
-    private FirebaseAuth mAuth;
     private static final int RC_SIGN_IN = 100;
+    private FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
     private String clientID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
 
-       // getTime(); // It refreshes the times from the shared preferences
-        // Configure sign-in to request the user's ID, email address, and basic
-        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
-      //  startService(new Intent(this, CommonAlarmRefreshService.class));
-
-
         try {
-            ApplicationInfo applicationInfo=getApplicationContext().getPackageManager().getApplicationInfo(getApplicationContext().getPackageName(), PackageManager.GET_META_DATA);
-            clientID=applicationInfo.metaData.get("ClientID").toString();
+            ApplicationInfo applicationInfo = getApplicationContext().getPackageManager().getApplicationInfo(getApplicationContext().getPackageName(), PackageManager.GET_META_DATA);
+            clientID = applicationInfo.metaData.get("ClientID").toString();
 
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-
-
 
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -72,6 +65,9 @@ public class MainActivity extends AppCompatActivity {
         // the GoogleSignInAccount will be non-null.
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         if (account != null) {
+            getTime(); // It refreshes the times from the shared preferences
+            // startService(new Intent(this,AlarmRefreshService.class));
+            startService(new Intent(this, CommonAlarmRefreshService.class));
 
             FirebaseUser user = mAuth.getCurrentUser();
             String personName = user.getDisplayName();
@@ -108,7 +104,6 @@ public class MainActivity extends AppCompatActivity {
             try {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
-               // Log.d(TAG, "firebaseAuthWithGoogle:" + user.getUid());
                 firebaseAuthWithGoogle(account.getIdToken());
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
@@ -142,17 +137,18 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
-        if(currentUser!=null){
+        if (currentUser != null) {
 
-        String personName=currentUser.getDisplayName();
+            String personName = currentUser.getDisplayName();
 
-        startActivity(new Intent(MainActivity.this, DisplayMedicineActivity.class).putExtra("UserName", personName).putExtra("Id", currentUser.getUid())
-                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK)
-                // This flags removes the backStack . It is used so that back press should not show the login screen .
-        );
+            startActivity(new Intent(MainActivity.this, DisplayMedicineActivity.class).putExtra("UserName", personName).putExtra("Id", currentUser.getUid())
+                            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK)
+                    // This flags removes the backStack . It is used so that back press should not show the login screen .
+            );
         }
 
     }
+
     private void firebaseAuthWithGoogle(String idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         mAuth.signInWithCredential(credential)
