@@ -34,6 +34,7 @@ import java.util.Objects;
  * @since 1.0.0
  */
 public class UpdateActivity extends AppCompatActivity {
+    MedicineRecordHandler oldRecord;
     private TextInputLayout name;
     private TextInputLayout note;
     private Button updateBtn;
@@ -51,12 +52,29 @@ public class UpdateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update);
 
+        Intent intent = getIntent();
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = mAuth.getCurrentUser();
-
         FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+
+        String KEY = intent.getStringExtra("key");
+        FirebaseUser user = mAuth.getCurrentUser();
         DatabaseReference myRef = database.getReference().child("MedicineRecord").child(Objects.requireNonNull(user.getUid()));
-        String PersonID = user.getUid();
+
+        myRef.child(KEY).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                MedicineRecordHandler mrd = snapshot.getValue(MedicineRecordHandler.class);
+                assert mrd != null;
+                prefillData(mrd);
+                oldRecord = mrd;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         name = findViewById(R.id.up_name);
         note = findViewById(R.id.up_note);
@@ -66,30 +84,19 @@ public class UpdateActivity extends AppCompatActivity {
         updateBtn = findViewById(R.id.up_updatebtn);
         cancelBtn = findViewById(R.id.up_cancel);
         up_custom_time = findViewById(R.id.up_custom_time);
-        Intent intent = getIntent();
-        String key = intent.getStringExtra("key");
-        prefillData(intent);
+
 
         //This code is for update button
         updateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                myRef.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        MedicineRecordHandler mrd = snapshot.getValue(MedicineRecordHandler.class);
-                        AlarmManagerHandler.cancelAlarm(getApplicationContext(), mrd);
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
+                if (oldRecord != null) {
+                    AlarmManagerHandler.cancelAlarm(getApplicationContext(), oldRecord);
+                }
 
                 if (InputValidationHandler.inputValidation(getData().getName(), getData().getReminder())) {
-                    myRef.child(key).setValue(getData()); //Updates the data to the FireBase DataBase
+                    myRef.child(KEY).setValue(getData()); //Updates the data to the FireBase DataBase
                     startActivity(
                             new Intent(UpdateActivity.this, DisplayMedicineActivity.class)
                                     .putExtra("UserName", user.getDisplayName()).putExtra("Id", user.getUid())
@@ -152,14 +159,11 @@ public class UpdateActivity extends AppCompatActivity {
 
     /**
      * It prefills the data to the fields for convenience of user when the activity starts
-     *
-     * @param intent it takes an intent with extras
      */
-    public void prefillData(Intent intent) {
-        String nameValue = intent.getStringExtra("name");
-        String noteValue = intent.getStringExtra("note");
-        Boolean beforeFood = intent.getBooleanExtra("beforeFood", true);
-
+    public void prefillData(MedicineRecordHandler mrd) {
+        String nameValue = mrd.getName();
+        String noteValue = mrd.getNotes();
+        Boolean beforeFood = mrd.getBeforeFood();
 
         if (beforeFood) {
             radioGroup.check(R.id.up_radio_button_1);
@@ -170,6 +174,20 @@ public class UpdateActivity extends AppCompatActivity {
         name.getEditText().setText(nameValue);
         note.getEditText().setText(noteValue);
 
+        for (TIME.AlarmBundle i : mrd.getReminder()) {
+            if (i.time.equals(TIME.MORNING)) {
+                materialButtonToggleGroup.check(R.id.up_morning);
+
+            } else if (i.time.equals(TIME.AFTERNOON)) {
+                materialButtonToggleGroup.check(R.id.up_lunch);
+            } else if (i.time.equals(TIME.NIGHT)) {
+                materialButtonToggleGroup1.check(R.id.up_night);
+            } else {
+                Button button = findViewById(R.id.up_custom_time);
+                button.setText(new StringBuilder().append(i.time.substring(0, 2)).append(":").append(i.time.substring(2, 4)).toString());
+                materialButtonToggleGroup1.check(R.id.up_custom_time);
+            }
+        }
 
     }
 
@@ -214,7 +232,6 @@ public class UpdateActivity extends AppCompatActivity {
 
         return mrh;
     }
-
 
 }
 

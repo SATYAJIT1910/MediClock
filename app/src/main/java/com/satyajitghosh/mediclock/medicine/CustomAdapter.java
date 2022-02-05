@@ -103,11 +103,7 @@ public class CustomAdapter extends ArrayAdapter<MedicineRecordHandler> {
                 Intent i = new Intent(getContext(), UpdateActivity.class);
                 MedicineRecordHandler mrd = arrayList.get(position);
 
-                // This extras helps to pre-fill the Update Activity fields.
-                i.putExtra("name", mrd.getName());
-                i.putExtra("note", mrd.getNotes());
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.putExtra("beforeFood", mrd.getBeforeFood());
                 i.putExtra("key", mrd.key);
                 getContext().startActivity(i);
             }
