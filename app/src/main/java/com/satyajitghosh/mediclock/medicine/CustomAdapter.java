@@ -46,14 +46,6 @@ public class CustomAdapter extends ArrayAdapter<MedicineRecordHandler> {
         user = mAuth.getCurrentUser();
     }
 
-    public void UpdateArrayList(MedicineRecordHandler data) {
-        arrayList.add(data);
-    }
-
-    public void requestUpdate() {
-        notifyDataSetChanged();
-    }
-
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -100,12 +92,10 @@ public class CustomAdapter extends ArrayAdapter<MedicineRecordHandler> {
             @Override
             public void onClick(View view) {
                 MedicineRecordHandler mrd = arrayList.get(position);
-                arrayList.clear();
                 myRef.child("MedicineRecord").child(user.getUid()).child(mrd.key).removeValue(); //This removes the child from the FireBase database .
                 Toast.makeText(getContext(), "Deleted", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getContext(), MyBroadcastReceiver.class);
                 AlarmManagerHandler.cancelAlarm(getContext(), intent, mrd);
-                notifyDataSetChanged();
             }
         });
 
@@ -116,7 +106,6 @@ public class CustomAdapter extends ArrayAdapter<MedicineRecordHandler> {
 
                 Intent i = new Intent(getContext(), UpdateActivity.class);
                 MedicineRecordHandler mrd = arrayList.get(position);
-                arrayList.clear();
 
                 // This extras helps to pre-fill the Update Activity fields.
                 i.putExtra("name", mrd.getName());

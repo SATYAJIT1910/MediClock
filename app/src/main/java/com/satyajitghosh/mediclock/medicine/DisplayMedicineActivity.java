@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -18,6 +19,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -64,18 +66,40 @@ public class DisplayMedicineActivity extends AppCompatActivity {
         account_user_name_view.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade));
 
         c = new CustomAdapter(getApplicationContext(), arrayList);
-        listview.setAdapter(c);
-        mDatabase.addValueEventListener(new ValueEventListener() {
+
+        mDatabase.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    findViewById(R.id.empty).setVisibility(View.INVISIBLE);
-                    findViewById(R.id.emptyText).setVisibility(View.INVISIBLE);
-                    refreshData(snapshot);
-                } else {
-                    findViewById(R.id.empty).setVisibility(View.VISIBLE);
-                    findViewById(R.id.emptyText).setVisibility(View.VISIBLE);
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                MedicineRecordHandler medicineRecordHandler=snapshot.getValue(MedicineRecordHandler.class);
+                medicineRecordHandler.key=snapshot.getKey();
+                arrayList.add(medicineRecordHandler);
+                emptyImage();
+                c.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                c.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+                MedicineRecordHandler medicineRecordHandler=snapshot.getValue(MedicineRecordHandler.class);
+                medicineRecordHandler.key=snapshot.getKey();
+
+                for (int i = 0; i < arrayList.size(); i++) {
+                    if (medicineRecordHandler.key.equals(arrayList.get(i).key)) {
+                        arrayList.remove(i);
+                    }
                 }
+                emptyImage();
+                c.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
             }
 
             @Override
@@ -83,6 +107,9 @@ public class DisplayMedicineActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Check you internet connection", Toast.LENGTH_SHORT).show();
             }
         });
+
+        listview.setAdapter(c);
+
         findViewById(R.id.add_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -113,23 +140,15 @@ public class DisplayMedicineActivity extends AppCompatActivity {
     }
 
 
-    /**
-     * This method is used to update the arraylist on CustomAdapter and refreshes the listview
-     *
-     * @param snapshot it gives the snapshot of the database
-     */
-    public void refreshData(DataSnapshot snapshot) {
-        Iterator<DataSnapshot> items = snapshot.getChildren().iterator();
-        while (items.hasNext()) {
-            DataSnapshot item = items.next();
+    public void emptyImage() {
+        if (c.isEmpty()) {
+            findViewById(R.id.empty).setVisibility(View.VISIBLE);
+            findViewById(R.id.emptyText).setVisibility(View.VISIBLE);
+        } else {
+            findViewById(R.id.empty).setVisibility(View.INVISIBLE);
+            findViewById(R.id.emptyText).setVisibility(View.INVISIBLE);
 
-            MedicineRecordHandler mrd = item.getValue(MedicineRecordHandler.class);
-
-            mrd.key = item.getKey();
-            c.UpdateArrayList(mrd);
         }
-        c.requestUpdate();
-
     }
 
 }
