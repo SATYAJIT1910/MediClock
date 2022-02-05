@@ -66,7 +66,6 @@ public class DocCustomAdapter extends ArrayAdapter<DoctorDataModel> {
                 DoctorDataModel ddm = arrayList.get(position);
                 myRef.child("AppointmentRecord").child(user.getUid()).child(ddm.key).removeValue(); //This removes the child from the FireBase database .
                 Toast.makeText(getContext(), "Deleted", Toast.LENGTH_SHORT).show();
-                //Cancel the alarm code here
             }
         });
 

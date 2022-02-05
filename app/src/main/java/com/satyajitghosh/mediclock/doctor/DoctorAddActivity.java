@@ -107,7 +107,6 @@ public class DoctorAddActivity extends AppCompatActivity {
         }
 
         public void onDateSet(DatePicker view, int year, int month, int day) {
-            // Do something with the date chosen by the user
             String result = day + "/" + (month + 1) + "/" + year;
             date_view.setText(result);
             arr[0] = day;

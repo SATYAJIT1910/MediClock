@@ -117,7 +117,7 @@ public class labAddActivity extends AppCompatActivity {
         }
 
         public void onDateSet(DatePicker view, int year, int month, int day) {
-            // Do something with the date chosen by the user
+
             String result = day + "/" + (month + 1) + "/" + year;
             lab_date_view.setText(result);
             arr[0] = day;

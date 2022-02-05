@@ -25,6 +25,12 @@ import com.satyajitghosh.mediclock.medicine.AlarmRefreshService;
 import java.util.Calendar;
 import java.util.Objects;
 
+/**
+ * This service is used to add,delete,update and refresh the alarms of all the sections.
+ * @author SATYAJIT GHOSH
+ * @since 2.0.0
+ *
+ */
 public class CommonAlarmRefreshService extends Service {
 
     protected GoogleSignInAccount account;
@@ -114,7 +120,7 @@ public class CommonAlarmRefreshService extends Service {
         int year = labTestDataModel.getYear();
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 8);
-        calendar.set(Calendar.MINUTE, 00);
+        calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.DAY_OF_MONTH, date);
         calendar.set(Calendar.MONTH, month - 1);

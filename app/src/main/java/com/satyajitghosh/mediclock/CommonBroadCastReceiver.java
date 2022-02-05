@@ -12,6 +12,11 @@ import androidx.core.app.NotificationManagerCompat;
 
 import com.satyajitghosh.mediclock.medicine.AlarmManagerHandler;
 
+/**
+ * This is a broadcast Receiver for LabTests and Doctor Appointments.
+ * @author SATYAJIT GHOSH
+ * @since 2.0.0
+ */
 public class CommonBroadCastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -55,7 +60,7 @@ public class CommonBroadCastReceiver extends BroadcastReceiver {
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
 
-// notificationId is a unique int for each notification that you must define
+        // notificationId is a unique int for each notification that you must define
         notificationManager.notify(AlarmManagerHandler.setUniqueNotificationId(), builder.build());
     }
 }
